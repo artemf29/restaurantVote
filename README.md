@@ -1,4 +1,5 @@
-Restaurant selection voting system
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d296c9c451554f358295d5e85066197a)](https://www.codacy.com/gh/artemf29/restaurantVote/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=artemf29/restaurantVote&amp;utm_campaign=Badge_Grade)
+-  Restaurant selection voting system
 
 REST API using:
 - Maven 
