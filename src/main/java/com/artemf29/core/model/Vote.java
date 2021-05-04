@@ -39,10 +39,6 @@ public class Vote extends AbstractBaseEntity {
         return voteDate;
     }
 
-    public void setVoteDate(LocalDate voteDate) {
-        this.voteDate = voteDate;
-    }
-
     public User getUser() {
         return user;
     }

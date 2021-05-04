@@ -3,12 +3,10 @@ package com.artemf29.core.model;
 import com.artemf29.core.HasIdAndEmail;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.*;
-import org.hibernate.annotations.Cache;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -96,10 +94,6 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     public Date getRegistered() {
         return registered;
-    }
-
-    public void setRegistered(Date registered) {
-        this.registered = registered;
     }
 
     public Set<Role> getRoles() {

@@ -3,7 +3,6 @@ package com.artemf29.core.testData;
 import com.artemf29.core.TestMatcher;
 import com.artemf29.core.model.Role;
 import com.artemf29.core.model.User;
-import com.artemf29.core.to.UserTo;
 import com.artemf29.core.util.json.JsonUtil;
 
 import java.util.Collections;
@@ -13,7 +12,6 @@ import static com.artemf29.core.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
     public static final TestMatcher<User> USER_MATCHER = TestMatcher.usingIgnoringFieldsComparator(User.class, "registered", "password");
-    public static TestMatcher<UserTo> USER_TO_MATCHER = TestMatcher.usingEqualsComparator(UserTo.class);
 
     public static final int USER_ID = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;

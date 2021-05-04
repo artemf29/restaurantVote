@@ -3,7 +3,6 @@ package com.artemf29.core.web.dish;
 import com.artemf29.core.model.Dish;
 import com.artemf29.core.repository.DishRepository;
 import com.artemf29.core.repository.RestaurantRepository;
-import com.artemf29.core.util.ValidationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

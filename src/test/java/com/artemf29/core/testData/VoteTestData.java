@@ -12,21 +12,10 @@ import static com.artemf29.core.testData.UserTestData.admin;
 import static com.artemf29.core.testData.UserTestData.user;
 import static com.artemf29.core.model.AbstractBaseEntity.START_SEQ;
 import static java.time.LocalDate.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class VoteTestData {
     public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Vote.class, "user", "restaurant");
     public static final TestMatcher<VoteTo> VOTE_TO_MATCHER = TestMatcher.usingEqualsComparator(VoteTo.class);
-
-
-    public static TestMatcher<Vote> VOTE_WITH_USER_AND_RESTAURANT_MATCHER =
-            TestMatcher.usingAssertions(Vote.class,
-//     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes
-                    (a, e) -> assertThat(a).usingRecursiveComparison()
-                            .ignoringFields("user.password", "user.registered", "restaurant.dishes").isEqualTo(e),
-                    (a, e) -> {
-                        throw new UnsupportedOperationException();
-                    });
 
     public static final int NOT_FOUND = 102;
     public static final int VOTE_1_ID = START_SEQ + 11;
@@ -51,7 +40,6 @@ public class VoteTestData {
     }
 
     public static final List<Vote> voteUser = List.of(vote1, vote3);
-    public static final List<Vote> voteAdmin = List.of(vote2, vote4);
 
     public static Vote getNew() {
         Vote vote = new Vote(null, now());

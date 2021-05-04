@@ -1,6 +1,5 @@
 package com.artemf29.core.web.restaurant;
 
-import com.artemf29.core.model.Dish;
 import com.artemf29.core.model.Restaurant;
 import com.artemf29.core.repository.RestaurantRepository;
 import com.artemf29.core.util.json.JsonUtil;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-import static com.artemf29.core.testData.DishTestData.DISH_1_ID;
 import static com.artemf29.core.testData.RestaurantTestData.*;
 import static com.artemf29.core.testData.UserTestData.admin;
 import static com.artemf29.core.testData.UserTestData.user;
