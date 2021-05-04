@@ -1,3 +1,6 @@
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/450a0a48fee34e009cabeec030b4ae01)](https://app.codacy.com/gh/artemf29/restaurantVote?utm_source=github.com&utm_medium=referral&utm_content=artemf29/restaurantVote&utm_campaign=Badge_Grade_Settings)
+
 Restaurant selection voting system
 
 REST API using:
