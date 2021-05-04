@@ -1,0 +1,59 @@
+###
+# get all restaurants
+### curl -s http://localhost:8080/rest/admin/restaurants --user admin@gmail.com:admin
+GET http://localhost:8080/rest/admin/restaurants
+Authorization: Basic admin@gmail.com admin
+
+###
+# get restaurant by id 100002
+### curl -s http://localhost:8080/rest/admin/restaurants/100002 --user admin@gmail.com:admin
+GET http://localhost:8080/rest/admin/restaurants/100002
+Authorization: Basic admin@gmail.com admin
+
+###
+# get with dish restaurant by id 100002
+### curl -s http://localhost:8080/rest/admin/restaurants/100002/with-dish --user admin@gmail.com:admin
+GET http://localhost:8080/rest/admin/restaurants/100002/with-dish
+Authorization: Basic admin@gmail.com admin
+
+###
+# create restaurant
+### curl -s -X POST "http://localhost:8080/rest/admin/restaurants"
+### -H "Content-Type: application/json" -d "{\"name\":\"new restaurant\"}" --user admin@gmail.com:admin
+POST http://localhost:8080/rest/admin/restaurants
+Authorization: Basic admin@gmail.com admin
+Content-Type: application/json
+
+{
+  "name": "new restaurant"
+}
+
+###
+# update restaurant by id 100002
+### curl -s -X PUT "http://localhost:8080/rest/admin/restaurants/100002"
+### -H "Content-Type: application/json" -d "{\"name\":\"update restaurant\"}" --user admin@gmail.com:admin
+PUT http://localhost:8080/rest/admin/restaurants/100002
+Authorization: Basic admin@gmail.com admin
+Content-Type: application/json
+
+{
+  "name": "update restaurant"
+}
+
+###
+# delete restaurant by id 100002
+### curl -s -X DELETE "http://localhost:8080/rest/admin/restaurants/100002" --user admin@gmail.com:admin
+DELETE http://localhost:8080/rest/admin/restaurants/100002
+Authorization: Basic admin@gmail.com admin
+
+###
+# get choice
+### curl -s http://localhost:8080/rest/choice --user admin@gmail.com:admin
+GET http://localhost:8080/rest/choice
+Authorization: Basic admin@gmail.com admin
+
+###
+# get restaurant not found
+### curl -s http://localhost:8080/rest/admin/restaurants/100001 --user admin@gmail.com:admin
+GET http://localhost:8080/rest/admin/restaurants/100001
+Authorization: Basic admin@gmail.com admin
