@@ -16,16 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-import static com.artemf29.core.testData.UserTestData.*;
+import static com.artemf29.core.testdata.UserTestDataUtils.*;
+import static com.artemf29.core.util.UrlUtil.ADMIN_URL;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AdminRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminRestController.REST_URL + '/';
+    private static final String REST_URL = ADMIN_URL + '/';
 
     @Autowired
     private UserRepository userRepository;

@@ -2,7 +2,8 @@ package com.artemf29.core.model;
 
 import com.artemf29.core.HasIdAndEmail;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.*;
+
+import org.hibernate.annotations.BatchSize;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;

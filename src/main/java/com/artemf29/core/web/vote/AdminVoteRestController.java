@@ -12,16 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.artemf29.core.util.UrlUtil.ADMIN_VOTE_URL;
 import static com.artemf29.core.util.ValidationUtil.checkSingleModification;
 import static com.artemf29.core.util.VoteUtil.createTo;
 import static com.artemf29.core.util.VoteUtil.getTos;
 
 @RestController
-@RequestMapping(value = AdminVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = ADMIN_VOTE_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminVoteRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-
-    static final String REST_URL = "/rest/admin/vote";
 
     protected VoteRepository voteRepository;
 

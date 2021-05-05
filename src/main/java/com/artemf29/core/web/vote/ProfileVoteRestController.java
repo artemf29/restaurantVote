@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+import static com.artemf29.core.util.UrlUtil.PROFILE_VOTE_URL;
 import static com.artemf29.core.util.ValidationUtil.*;
 import static com.artemf29.core.util.VoteUtil.reVotingPermission;
 
 @RestController
-@RequestMapping(value = ProfileVoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = PROFILE_VOTE_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileVoteRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-
-    static final String REST_URL = "/rest/profile/vote";
 
     protected VoteRepository voteRepository;
     protected UserRepository userRepository;

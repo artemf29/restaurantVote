@@ -16,9 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
 
-import static com.artemf29.core.testData.DishTestData.*;
-import static com.artemf29.core.testData.RestaurantTestData.RESTAURANT_1_ID;
-import static com.artemf29.core.testData.UserTestData.admin;
+import static com.artemf29.core.testdata.DishTestDataUtils.*;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_1_ID;
+import static com.artemf29.core.testdata.UserTestDataUtils.admin;
+import static com.artemf29.core.util.UrlUtil.DISH_URL;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DishRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = DishRestController.REST_URL + '/';
+    private static final String REST_URL = DISH_URL + '/';
 
     @Autowired
     private DishRepository dishRepository;

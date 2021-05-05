@@ -23,11 +23,9 @@ public class UniqueMailValidator implements org.springframework.validation.Valid
     @Override
     public void validate(Object target, Errors errors) {
         HasIdAndEmail user = ((HasIdAndEmail) target);
-        if (StringUtils.hasText(user.getEmail())) {
-            if (repository.getByEmail(user.getEmail().toLowerCase())
-                    .filter(u -> !u.getId().equals(user.getId())).isPresent()) {
-                errors.rejectValue("email", "", "User with this email already exists");
-            }
+        if (StringUtils.hasText(user.getEmail()) && repository.getByEmail(user.getEmail().toLowerCase())
+                .filter(u -> !u.getId().equals(user.getId())).isPresent()) {
+            errors.rejectValue("email", "", "User with this email already exists");
         }
     }
 }

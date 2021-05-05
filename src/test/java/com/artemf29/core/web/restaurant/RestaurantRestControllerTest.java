@@ -14,9 +14,11 @@ import java.util.List;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-import static com.artemf29.core.testData.RestaurantTestData.*;
-import static com.artemf29.core.testData.UserTestData.admin;
-import static com.artemf29.core.testData.UserTestData.user;
+
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.*;
+import static com.artemf29.core.testdata.UserTestDataUtils.admin;
+import static com.artemf29.core.testdata.UserTestDataUtils.user;
+import static com.artemf29.core.util.UrlUtil.RESTAURANT_URL;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class RestaurantRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = RestaurantRestController.REST_URL + '/';
+    private static final String REST_URL = RESTAURANT_URL + '/';
 
     @Autowired
     private RestaurantRepository restaurantRepository;

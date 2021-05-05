@@ -15,14 +15,13 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static com.artemf29.core.util.UrlUtil.DISH_URL;
 import static com.artemf29.core.util.ValidationUtil.*;
 
 @RestController
-@RequestMapping(value = DishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = DISH_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class DishRestController {
     private final Logger log = LoggerFactory.getLogger(getClass());
-
-    static final String REST_URL = "/rest/admin/restaurants/{restId}/dishes";
 
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
@@ -69,7 +68,7 @@ public class DishRestController {
         dish.setRestaurant(restaurantRepository.getOne(restId));
         Dish created = dishRepository.save(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
+                .path(DISH_URL + "/{id}")
                 .buildAndExpand(restId, created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }

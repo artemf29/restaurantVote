@@ -2,7 +2,7 @@ package com.artemf29.core.web.vote;
 
 import com.artemf29.core.model.Vote;
 import com.artemf29.core.repository.VoteRepository;
-import com.artemf29.core.testData.VoteTestData;
+import com.artemf29.core.testdata.VoteTestDataUtils;
 import com.artemf29.core.web.AbstractControllerTest;
 import com.artemf29.core.web.ExceptionInfoHandler;
 import org.junit.jupiter.api.Test;
@@ -12,11 +12,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-import static com.artemf29.core.testData.RestaurantTestData.RESTAURANT_2_ID;
-import static com.artemf29.core.testData.RestaurantTestData.RESTAURANT_3_ID;
-import static com.artemf29.core.testData.UserTestData.*;
-import static com.artemf29.core.testData.VoteTestData.*;
-import static com.artemf29.core.testData.VoteTestData.NOT_FOUND;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_2_ID;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_3_ID;
+import static com.artemf29.core.testdata.UserTestDataUtils.user;
+import static com.artemf29.core.testdata.UserTestDataUtils.USER_ID;
+import static com.artemf29.core.testdata.VoteTestDataUtils.*;
+import static com.artemf29.core.testdata.VoteTestDataUtils.NOT_FOUND;
+import static com.artemf29.core.util.UrlUtil.PROFILE_VOTE_URL;
 import static java.time.LocalTime.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class ProfileVoteRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = ProfileVoteRestController.REST_URL + '/';
+    private static final String REST_URL = PROFILE_VOTE_URL + '/';
 
     @Autowired
     private VoteRepository voteRepository;
@@ -38,7 +40,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception { //if local time is before 11am
-        Vote updated = VoteTestData.getUpdated();
+        Vote updated = getUpdated();
         if (now().isAfter(of(11, 0))) {
             perform(MockMvcRequestBuilders.put(REST_URL + VOTE_1_ID)
                     .param("restId", Integer.toString(RESTAURANT_2_ID))
@@ -57,7 +59,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        Vote newVote = VoteTestData.getNew();
+        Vote newVote = getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .param("restId", Integer.toString(RESTAURANT_3_ID))
                 .with(userHttpBasic(user)))

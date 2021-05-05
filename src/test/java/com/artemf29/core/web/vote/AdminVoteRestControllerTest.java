@@ -10,9 +10,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 
 import static com.artemf29.core.TestUtil.userHttpBasic;
-import static com.artemf29.core.testData.UserTestData.USER_ID;
-import static com.artemf29.core.testData.UserTestData.admin;
-import static com.artemf29.core.testData.VoteTestData.*;
+import static com.artemf29.core.testdata.UserTestDataUtils.USER_ID;
+import static com.artemf29.core.testdata.UserTestDataUtils.admin;
+import static com.artemf29.core.testdata.VoteTestDataUtils.*;
+import static com.artemf29.core.util.UrlUtil.ADMIN_VOTE_URL;
 import static com.artemf29.core.util.VoteUtil.createTo;
 import static com.artemf29.core.util.VoteUtil.getTos;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class AdminVoteRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = AdminVoteRestController.REST_URL + '/';
+    private static final String REST_URL = ADMIN_VOTE_URL + '/';
 
     @Autowired
     private VoteRepository voteRepository;

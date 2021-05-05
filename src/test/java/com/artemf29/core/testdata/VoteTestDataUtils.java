@@ -1,4 +1,4 @@
-package com.artemf29.core.testData;
+package com.artemf29.core.testdata;
 
 import com.artemf29.core.TestMatcher;
 import com.artemf29.core.model.Vote;
@@ -7,13 +7,13 @@ import com.artemf29.core.to.VoteTo;
 import java.time.Month;
 import java.util.List;
 
-import static com.artemf29.core.testData.RestaurantTestData.*;
-import static com.artemf29.core.testData.UserTestData.admin;
-import static com.artemf29.core.testData.UserTestData.user;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.*;
+import static com.artemf29.core.testdata.UserTestDataUtils.admin;
+import static com.artemf29.core.testdata.UserTestDataUtils.user;
 import static com.artemf29.core.model.AbstractBaseEntity.START_SEQ;
 import static java.time.LocalDate.*;
 
-public class VoteTestData {
+public class VoteTestDataUtils {
     public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Vote.class, "user", "restaurant");
     public static final TestMatcher<VoteTo> VOTE_TO_MATCHER = TestMatcher.usingEqualsComparator(VoteTo.class);
 

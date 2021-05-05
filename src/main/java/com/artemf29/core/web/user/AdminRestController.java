@@ -12,12 +12,12 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static com.artemf29.core.util.UrlUtil.ADMIN_URL;
 import static com.artemf29.core.util.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = ADMIN_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController extends AbstractUserController {
-    static final String REST_URL = "/rest/admin/users";
 
     @Override
     @GetMapping("/{id}")
@@ -45,7 +45,7 @@ public class AdminRestController extends AbstractUserController {
         checkNew(user);
         User created = super.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
+                .path(ADMIN_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
