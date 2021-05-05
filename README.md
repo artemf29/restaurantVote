@@ -33,86 +33,141 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 - http://localhost:8080/v2/api-docs
 #### <pre>to check http requests, use <a href="HttpRequest">/HttpRequest</a> folder (<a href="HttpRequest/User.http">User</a>,<a href="HttpRequest/Vote.http">Vote</a>,<a href="HttpRequest/Restaurant.http">Restaurant</a>,<a href="HttpRequest/Dish.http">Dish</a>)</pre>
 ***
-### curl samples:
+## curl samples:
 
-#### `Admin`
+### `Admin`
 
-#### AdminRestController
-- #### get all users
+### AdminRestController
+- get all users
+
 `curl -s http://localhost:8080/rest/admin/users --user admin@gmail.com:admin`
-- #### get user by id 100001
+
+- get user by id 100001
+ 
 `curl -s http://localhost:8080/rest/admin/users/100001 --user admin@gmail.com:admin`
-- #### get user by email admin
+
+- get user by email admin
+
 `curl -s http://localhost:8080/rest/admin/users/by?email=admin@gmail.com --user admin@gmail.com:admin`
-- #### create user
+
+- create user
+
 `curl -s -X POST "http://localhost:8080/rest/admin/users" -H "Content-Type: application/json" -d "{\"name\":\"new User\",\"email\":\"test@icloud.com\",\"password\":\"test123\"}" --user admin@gmail.com:admin`
-- #### update user by id 100000
+
+- update user by id 100000
+
 `curl -s -X PUT "http://localhost:8080/rest/admin/users/100000" -H "Content-Type: application/json" -d "{\"name\":\"update User\",\"email\":\"updated@icloud.com\",\"password\":\"updated\"}" --user admin@gmail.com:admin`
-- #### delete user by id 100000
+
+- delete user by id 100000
+
 `curl -s -X DELETE "http://localhost:8080/rest/admin/users/100000" --user admin@gmail.com:admin`
 
-#### AdminVoteRestController
-- #### get all votes
+### AdminVoteRestController
+- get all votes
+
 `curl -s http://localhost:8080/rest/admin/vote/getAll --user admin@gmail.com:admin`
-- #### get all votes by user id 100001
+
+- get all votes by user id 100001
+
 `curl -s http://localhost:8080/rest/admin/vote/getAll/100001 --user admin@gmail.com:admin`
-- #### get vote by id 100012 by user id 100001
+
+- get vote by id 100012 by user id 100001
+
 `curl -s http://localhost:8080/rest/admin/vote/100001/100012 --user admin@gmail.com:admin`
-- #### delete vote by id 100012 by user id 100001
+
+- delete vote by id 100012 by user id 100001
+
 `curl -s -X DELETE "http://localhost:8080/rest/admin/vote/100001/100012" --user admin@gmail.com:admin`
 
-#### RestaurantRestController
-- #### get all restaurants
+### RestaurantRestController
+- get all restaurants
+
 `curl -s http://localhost:8080/rest/admin/restaurants --user admin@gmail.com:admin`
-- #### get restaurant by id 100002
+
+- get restaurant by id 100002
+
 `curl -s http://localhost:8080/rest/admin/restaurants/100002 --user admin@gmail.com:admin`
-- #### get with dish restaurant by id 100002
+
+- get with dish restaurant by id 100002
+
 `curl -s http://localhost:8080/rest/admin/restaurants/100002/with-dish --user admin@gmail.com:admin`
-- #### create restaurant
+
+- create restaurant
+
 `curl -s -X POST "http://localhost:8080/rest/admin/restaurants" -H "Content-Type: application/json" -d "{\"name\":\"new restaurant\"}" --user admin@gmail.com:admin`
-- #### update restaurant by id 100002
+
+- update restaurant by id 100002
+
 `curl -s -X PUT "http://localhost:8080/rest/admin/restaurants/100002" -H "Content-Type: application/json" -d "{\"name\":\"update restaurant\"}" --user admin@gmail.com:admin`
-- #### delete restaurant by id 100002
+
+- delete restaurant by id 100002
+
 `curl -s -X DELETE "http://localhost:8080/rest/admin/restaurants/100002" --user admin@gmail.com:admin`
-- #### get choice
+
+- get choice
+
 `curl -s http://localhost:8080/rest/choice --user admin@gmail.com:admin`
-- #### get restaurant not found
+
+- get restaurant not found
+
 `curl -s http://localhost:8080/rest/admin/restaurants/100001 --user admin@gmail.com:admin`
 
-#### DishRestController
-- #### get all dishes by restaurant id 100002
+### DishRestController
+- get all dishes by restaurant id 100002
+
 `curl -s http://localhost:8080/rest/admin/restaurants/100002/dishes --user admin@gmail.com:admin`
-- #### get dish by id 100007 by restaurant id 100002
+
+- get dish by id 100007 by restaurant id 100002
+
 `curl -s http://localhost:8080/rest/admin/restaurants/100002/dishes/100007 --user admin@gmail.com:admin`
-- #### create dish by restaurant id 100002
+
+- create dish by restaurant id 100002
+
 `curl -s -X POST "http://localhost:8080/rest/admin/restaurants/100002/dishes" -H "Content-Type: application/json" -d "{\"name\":\"new dish\",\"price\":1000,\"description\":\"new\"}" --user admin@gmail.com:admin`
-- #### update dish by id 100007 by restaurant id 100002
+
+- update dish by id 100007 by restaurant id 100002
+
 `curl -s -X PUT "http://localhost:8080/rest/admin/restaurants/100002/dishes/100007" -H "Content-Type: application/json" -d "{\"name\":\"update dish\",\"price\":999,\"description\":\"update\"}" --user admin@gmail.com:admin`
-- #### delete dish by id 100007 by restaurant id 100002
+
+- delete dish by id 100007 by restaurant id 100002
+
 `curl -s -X DELETE "http://localhost:8080/rest/admin/restaurants/100002/dishes/100007" --user admin@gmail.com:admin`
-- #### get dish not found
+
+- get dish not found
+
 `curl -s http://localhost:8080/rest/admin/restaurants/100002/dishes/100015 --user admin@gmail.com:admin`
 
-#### `User`
+### `User`
 
-#### ProfileRestController
-- #### get user profile by id 100000
+### ProfileRestController
+- get user profile by id 100000
+
 `curl -s http://localhost:8080/rest/profile --user user@yandex.ru:password`
-- #### register user
+
+- register user
+
 `curl -s -X POST "http://localhost:8080/rest/profile/register" -H "Content-Type: application/json" -d "{\"name\":\"new User\",\"email\":\"new@gmail.com\",\"password\":\"new123\"}"`
-- #### update profile
+
+- update profile
+
 `curl -s -X PUT "http://localhost:8080/rest/profile" -H "Content-Type: application/json" -d "{\"name\":\"update User\",\"email\":\"update@gmail.com\",\"password\":\"update123\"}" --user user@yandex.ru:password`
-- #### delete profile
+
+- delete profile
+
 `curl -s -X DELETE "http://localhost:8080/rest/profile" --user user@yandex.ru:password`
 
-#### ProfileVoteRestController
-- #### create vote by restaurant id 100004
+### ProfileVoteRestController
+- create vote by restaurant id 100004
+
 `curl -s -X POST "http://localhost:8080/rest/profile/vote?restId=100004" --user user@yandex.ru:password`
-- #### update vote by restaurant id 100004 by vote id 100011 if local time is before 11am
+
+- update vote by restaurant id 100004 by vote id 100011 if local time is before 11am
+
 `curl -s -X PUT "http://localhost:8080/rest/profile/vote/100011?restId=100004" --user user@yandex.ru:password`
 
-#### RestaurantRestController
-- #### get choice
+### RestaurantRestController
+- get choice
+
 `curl -s http://localhost:8080/rest/choice --user user@yandex.ru:password`
 
 ***
