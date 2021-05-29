@@ -1,8 +1,8 @@
 ***
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d296c9c451554f358295d5e85066197a)](https://www.codacy.com/gh/artemf29/restaurantVote/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=artemf29/restaurantVote&amp;utm_campaign=Badge_Grade)
-[![Build Status](https://travis-ci.com/artemf29/restaurantVote.svg?branch=master)](https://travis-ci.com/artemf29/restaurantVote)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d296c9c451554f358295d5e85066197a)](https://www.codacy.com/gh/artfil/restaurantVote/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=artfil/restaurantVote&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.com/artfil/restaurantVote.svg?branch=master)](https://travis-ci.com/artfil/restaurantVote)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-green.svg?style=flat-square)](https://github.com/artemf29/restaurantVote/blob/master/CODE_OF_CONDUCT.md)
+[![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-green.svg?style=flat-square)](https://github.com/artfil/restaurantVote/blob/master/CODE_OF_CONDUCT.md)
 ***
 # Restaurant selection voting system
 
