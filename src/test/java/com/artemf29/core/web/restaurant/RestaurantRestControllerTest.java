@@ -121,12 +121,12 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void getChoice() throws Exception {
-        perform(MockMvcRequestBuilders.get("/rest/choice")
+    void getAllWithDish() throws Exception {
+        perform(MockMvcRequestBuilders.get("/rest/getAllRestWithDish")
                 .with(userHttpBasic(user)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(restaurantRepository.getChoice()));
+                .andExpect(RESTAURANT_MATCHER.contentJson(restaurantRepository.getAllWithDish()));
     }
 
     @Test

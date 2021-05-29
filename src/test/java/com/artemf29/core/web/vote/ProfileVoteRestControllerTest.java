@@ -2,7 +2,6 @@ package com.artemf29.core.web.vote;
 
 import com.artemf29.core.model.Vote;
 import com.artemf29.core.repository.VoteRepository;
-import com.artemf29.core.testdata.VoteTestDataUtils;
 import com.artemf29.core.web.AbstractControllerTest;
 import com.artemf29.core.web.ExceptionInfoHandler;
 import org.junit.jupiter.api.Test;

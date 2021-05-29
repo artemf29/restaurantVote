@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "rest_unique_dish_name_idx")})
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "name"}, name = "rest_unique_dish_name_idx")})
 public class Dish extends AbstractBaseEntity {
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     @NotNull
     private String name;
 
@@ -22,7 +22,7 @@ public class Dish extends AbstractBaseEntity {
     @Range(min = 1, max = 1000000)
     private int price;
 
-    @Column(name = "description", nullable = false, columnDefinition = "No description")
+    @Column(name = "description", nullable = false)
     @NotBlank
     @Size(min = 2, max = 120)
     private String description = "No description";

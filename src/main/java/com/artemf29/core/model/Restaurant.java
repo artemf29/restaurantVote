@@ -11,7 +11,7 @@ import java.util.List;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
-@Table(name = "restaurant")
+@Table(name = "restaurant", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "restaurant_unique_name_idx")})
 public class Restaurant extends AbstractNamedEntity {
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

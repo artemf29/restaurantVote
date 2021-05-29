@@ -104,9 +104,9 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 `curl -s -X DELETE "http://localhost:8080/rest/admin/restaurants/100002" --user admin@gmail.com:admin`
 
-- get choice
+- get all restaurants with dish
 
-`curl -s http://localhost:8080/rest/choice --user admin@gmail.com:admin`
+`curl -s http://localhost:8080/rest/getAllRestWithDish --user admin@gmail.com:admin`
 
 - get restaurant not found
 
@@ -166,12 +166,12 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 `curl -s -X PUT "http://localhost:8080/rest/profile/vote/100011?restId=100004" --user user@yandex.ru:password`
 
 ### RestaurantRestController
-- get choice
+- get all restaurants with dish
 
-`curl -s http://localhost:8080/rest/choice --user user@yandex.ru:password`
+`curl -s http://localhost:8080/rest/getAllRestWithDish --user user@yandex.ru:password`
 
 ***
 ### Caching(EHCACHE)
 App caches 2 methods from the Restaurant for two hours (earlier, if changes are made):
 1. getAll() - get all restaurants - for admins
-2. getChoice() - get all restaurants with dishes - for admins and users
+2. getAllRestWithDish() - get all restaurants with dishes - for admins and users
