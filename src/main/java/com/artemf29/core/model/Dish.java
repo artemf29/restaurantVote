@@ -1,6 +1,8 @@
 package com.artemf29.core.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Column;
@@ -35,6 +37,7 @@ public class Dish extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rest_id", nullable = false)
     @JsonBackReference
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
     public Dish() {

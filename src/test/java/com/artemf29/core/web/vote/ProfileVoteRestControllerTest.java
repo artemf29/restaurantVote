@@ -2,6 +2,7 @@ package com.artemf29.core.web.vote;
 
 import com.artemf29.core.model.Vote;
 import com.artemf29.core.repository.VoteRepository;
+import com.artemf29.core.util.VoteUtil;
 import com.artemf29.core.web.AbstractControllerTest;
 import com.artemf29.core.web.ExceptionInfoHandler;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_MATCHER.contentJson(vote2));
+                .andExpect(VOTE_TO_MATCHER.contentJson(VoteUtil.createTo(vote2)));
     }
 
     @Test

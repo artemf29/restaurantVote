@@ -5,6 +5,7 @@ import com.artemf29.core.model.Vote;
 import com.artemf29.core.repository.RestaurantRepository;
 import com.artemf29.core.repository.UserRepository;
 import com.artemf29.core.repository.VoteRepository;
+import com.artemf29.core.to.VoteTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import static com.artemf29.core.util.UrlUtil.PROFILE_VOTE_URL;
 import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
 import static com.artemf29.core.util.ValidationUtil.checkNotFoundWithId;
+import static com.artemf29.core.util.VoteUtil.createTo;
 import static com.artemf29.core.util.VoteUtil.reVotingPermission;
 
 @RestController
@@ -36,9 +38,9 @@ public class ProfileVoteRestController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<Vote> get(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public ResponseEntity<VoteTo> get(@AuthenticationPrincipal AuthorizedUser authUser) {
         log.info("get for User{}", authUser.getId());
-        return ResponseEntity.of(Optional.of(voteRepository.getByDate(LocalDate.now(), authUser.getId()).get()));
+        return ResponseEntity.of(Optional.of(createTo(voteRepository.getByDate(LocalDate.now(), authUser.getId()).get())));
     }
 
     @PutMapping(value = "/{id}")
