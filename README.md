@@ -89,7 +89,7 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 - get all restaurants with dish
 
-`curl -s http://localhost:8080/rest/getAllRestWithDish --user admin@gmail.com:admin`
+`curl -s http://localhost:8080/rest/restaurants/with-dishes --user admin@gmail.com:admin`
 
 - get restaurant not found
 
@@ -155,7 +155,7 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 ### RestaurantRestController
 - get all restaurants with dish
 
-`curl -s http://localhost:8080/rest/getAllRestWithDish --user user@yandex.ru:password`
+`curl -s http://localhost:8080/rest/restaurants/with-dishes --user user@yandex.ru:password`
 
 ***
 ### Caching(EHCACHE)

@@ -48,8 +48,8 @@ Authorization: Basic admin@gmail.com admin
 
 ###
 # get all restaurants with dish
-### curl -s http://localhost:8080/rest/getAllRestWithDish --user admin@gmail.com:admin
-GET http://localhost:8080/rest/getAllRestWithDish
+### curl -s http://localhost:8080/rest/restaurants/with-dishes --user admin@gmail.com:admin
+GET http://localhost:8080/rest/restaurants/with-dishes
 Authorization: Basic admin@gmail.com admin
 
 ###

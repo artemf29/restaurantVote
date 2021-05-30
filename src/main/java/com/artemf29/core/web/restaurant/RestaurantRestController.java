@@ -84,7 +84,7 @@ public class RestaurantRestController {
     }
 
     @Cacheable("restaurants")
-    @GetMapping("/rest/getAllRestWithDish")
+    @GetMapping("/rest/restaurants/with-dishes")
     public List<Restaurant> getAllWithDish() {
         log.info("getAll restaurants");
         return restaurantRepository.getAllWithDish();

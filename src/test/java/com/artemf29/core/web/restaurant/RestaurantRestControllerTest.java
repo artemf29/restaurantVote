@@ -122,7 +122,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllWithDish() throws Exception {
-        perform(MockMvcRequestBuilders.get("/rest/getAllRestWithDish")
+        perform(MockMvcRequestBuilders.get("/rest/restaurants/with-dishes")
                 .with(userHttpBasic(user)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
