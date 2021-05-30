@@ -18,7 +18,10 @@ import java.net.URI;
 import java.util.List;
 
 import static com.artemf29.core.util.UrlUtil.RESTAURANT_URL;
-import static com.artemf29.core.util.ValidationUtil.*;
+import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
+import static com.artemf29.core.util.ValidationUtil.checkNew;
+import static com.artemf29.core.util.ValidationUtil.checkNotFoundWithId;
+import static com.artemf29.core.util.ValidationUtil.checkSingleModification;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)

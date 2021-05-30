@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import java.util.List;
 
-import static com.artemf29.core.util.ValidationUtil.*;
+import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
+import static com.artemf29.core.util.ValidationUtil.checkNew;
+import static com.artemf29.core.util.ValidationUtil.checkSingleModification;
 
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());

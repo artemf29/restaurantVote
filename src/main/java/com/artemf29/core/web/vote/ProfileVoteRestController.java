@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 import static com.artemf29.core.util.UrlUtil.PROFILE_VOTE_URL;
-import static com.artemf29.core.util.ValidationUtil.*;
+import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
+import static com.artemf29.core.util.ValidationUtil.checkNotFoundWithId;
 import static com.artemf29.core.util.VoteUtil.reVotingPermission;
 
 @RestController
