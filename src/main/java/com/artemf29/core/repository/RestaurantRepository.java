@@ -25,5 +25,5 @@ public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
     @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM Restaurant r")
-    List<Restaurant> getChoice();
+    List<Restaurant> getAllWithDish();
 }

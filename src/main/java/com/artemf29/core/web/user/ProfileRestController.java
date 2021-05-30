@@ -16,10 +16,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
+import static com.artemf29.core.util.UrlUtil.PROFILE_URL;
+
 @RestController
-@RequestMapping(value = ProfileRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = PROFILE_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileRestController extends AbstractUserController {
-    static final String REST_URL = "/rest/profile";
 
     @GetMapping
     public HttpEntity<User> get(@AuthenticationPrincipal AuthorizedUser authUser) {
@@ -38,7 +39,7 @@ public class ProfileRestController extends AbstractUserController {
         log.info("register {}", userTo);
         User created = super.create(userTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL).build().toUri();
+                .path(PROFILE_URL).build().toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 

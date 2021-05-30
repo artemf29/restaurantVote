@@ -12,16 +12,16 @@ public class VoteTo extends BaseTo implements Serializable {
 
     private final LocalDate date;
 
-    private final int userId;
-
     private final int restId;
 
-    @ConstructorProperties({"id", "date", "userId", "restId"})
-    public VoteTo(Integer id, LocalDate date, int userId, int restId) {
+    private final String restName;
+
+    @ConstructorProperties({"id", "date", "restId", "restName"})
+    public VoteTo(Integer id, LocalDate date, int restId, String restName) {
         super(id);
         this.date = date;
-        this.userId = userId;
         this.restId = restId;
+        this.restName = restName;
     }
 
     @Override
@@ -29,12 +29,12 @@ public class VoteTo extends BaseTo implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VoteTo voteTo = (VoteTo) o;
-        return userId == voteTo.userId && restId == voteTo.restId && date.equals(voteTo.date);
+        return restId == voteTo.restId && date.equals(voteTo.date) && restName.equals(voteTo.restName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, userId, restId);
+        return Objects.hash(date, restId, restName);
     }
 
     @Override
@@ -42,8 +42,8 @@ public class VoteTo extends BaseTo implements Serializable {
         return "VoteTo{" +
                 "id=" + id +
                 ", date=" + date +
-                ", userId=" + userId +
                 ", restId=" + restId +
+                ", restName=" + restName +
                 '}';
     }
 }

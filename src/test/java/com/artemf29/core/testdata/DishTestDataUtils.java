@@ -1,4 +1,4 @@
-package com.artemf29.core.testData;
+package com.artemf29.core.testdata;
 
 import com.artemf29.core.TestMatcher;
 import com.artemf29.core.model.Dish;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import static com.artemf29.core.model.AbstractBaseEntity.START_SEQ;
 
-public class DishTestData {
+public class DishTestDataUtils {
     public static final TestMatcher<Dish> DISH_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Dish.class, "restaurant");
 
     public static final int NOT_FOUND = 100;

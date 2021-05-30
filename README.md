@@ -7,8 +7,8 @@
 # Restaurant selection voting system
 
 Enterprise Java project with registration/authorization and access rights based on roles (USER, ADMINISTRATOR).
-The administrator can create / edit / delete - dishes / restaurants / users, as well as view / delete voting results.
-Users can manage their profile and vote via the REST interface with basic authorization.
+The administrator can create / edit / delete - dishes / restaurants / users.
+Users can manage their profile, view restaurants and their menus, and vote via the REST interface with basic authorization.
 The entire REST interface is covered by JUnit tests using Spring MVC Test and Spring Security Test.
 
 ### Description:
@@ -62,23 +62,6 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 `curl -s -X DELETE "http://localhost:8080/rest/admin/users/100000" --user admin@gmail.com:admin`
 
-### AdminVoteRestController
-- get all votes
-
-`curl -s http://localhost:8080/rest/admin/vote/getAll --user admin@gmail.com:admin`
-
-- get all votes by user id 100001
-
-`curl -s http://localhost:8080/rest/admin/vote/getAll/100001 --user admin@gmail.com:admin`
-
-- get vote by id 100012 by user id 100001
-
-`curl -s http://localhost:8080/rest/admin/vote/100001/100012 --user admin@gmail.com:admin`
-
-- delete vote by id 100012 by user id 100001
-
-`curl -s -X DELETE "http://localhost:8080/rest/admin/vote/100001/100012" --user admin@gmail.com:admin`
-
 ### RestaurantRestController
 - get all restaurants
 
@@ -104,9 +87,9 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 `curl -s -X DELETE "http://localhost:8080/rest/admin/restaurants/100002" --user admin@gmail.com:admin`
 
-- get choice
+- get all restaurants with dish
 
-`curl -s http://localhost:8080/rest/choice --user admin@gmail.com:admin`
+`curl -s http://localhost:8080/rest/getAllRestWithDish --user admin@gmail.com:admin`
 
 - get restaurant not found
 
@@ -161,17 +144,21 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 `curl -s -X POST "http://localhost:8080/rest/profile/vote?restId=100004" --user user@yandex.ru:password`
 
+- get today's vote
+  
+`curl -s http://localhost:8080/rest/profile/vote/ --user user@yandex.ru:password`
+
 - update vote by restaurant id 100004 by vote id 100011 if local time is before 11am
 
 `curl -s -X PUT "http://localhost:8080/rest/profile/vote/100011?restId=100004" --user user@yandex.ru:password`
 
 ### RestaurantRestController
-- get choice
+- get all restaurants with dish
 
-`curl -s http://localhost:8080/rest/choice --user user@yandex.ru:password`
+`curl -s http://localhost:8080/rest/getAllRestWithDish --user user@yandex.ru:password`
 
 ***
 ### Caching(EHCACHE)
 App caches 2 methods from the Restaurant for two hours (earlier, if changes are made):
 1. getAll() - get all restaurants - for admins
-2. getChoice() - get all restaurants with dishes - for admins and users
+2. getAllRestWithDish() - get all restaurants with dishes - for admins and users

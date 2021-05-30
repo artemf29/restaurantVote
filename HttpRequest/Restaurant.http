@@ -47,9 +47,9 @@ DELETE http://localhost:8080/rest/admin/restaurants/100002
 Authorization: Basic admin@gmail.com admin
 
 ###
-# get choice
-### curl -s http://localhost:8080/rest/choice --user admin@gmail.com:admin
-GET http://localhost:8080/rest/choice
+# get all restaurants with dish
+### curl -s http://localhost:8080/rest/getAllRestWithDish --user admin@gmail.com:admin
+GET http://localhost:8080/rest/getAllRestWithDish
 Authorization: Basic admin@gmail.com admin
 
 ###

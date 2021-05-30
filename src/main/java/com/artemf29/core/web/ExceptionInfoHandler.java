@@ -1,7 +1,11 @@
 package com.artemf29.core.web;
 
 import com.artemf29.core.util.ValidationUtil;
-import com.artemf29.core.util.exception.*;
+import com.artemf29.core.util.exception.ErrorInfo;
+import com.artemf29.core.util.exception.ErrorType;
+import com.artemf29.core.util.exception.IllegalRequestDataException;
+import com.artemf29.core.util.exception.NotFoundException;
+import com.artemf29.core.util.exception.UpdateVoteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -17,8 +21,12 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
-import static com.artemf29.core.util.exception.ErrorType.*;
+import static com.artemf29.core.util.exception.ErrorType.APP_ERROR;
+import static com.artemf29.core.util.exception.ErrorType.DATA_ERROR;
+import static com.artemf29.core.util.exception.ErrorType.DATA_NOT_FOUND;
+import static com.artemf29.core.util.exception.ErrorType.VALIDATION_ERROR;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
@@ -29,6 +37,7 @@ public class ExceptionInfoHandler {
     public static final String EXCEPTION_DUPLICATE_DISH_NAME = "Dish with this name already exists";
     public static final String EXCEPTION_DUPLICATE_VOTE = "Vote with this date already exists";
     public static final String EXCEPTION_UPDATE_VOTE = "it is forbidden to change vote after 11:00";
+    public static final String EXCEPTION_GET_VOTE = "User did not vote today";
 
     private static final Map<String, String> CONSTRAINS_MAP = Map.of(
             "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL,
@@ -71,6 +80,11 @@ public class ExceptionInfoHandler {
     @ExceptionHandler({IllegalRequestDataException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     public ResponseEntity<ErrorInfo> illegalRequestDataError(HttpServletRequest req, Exception e) {
         return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ErrorInfo> handleError(HttpServletRequest req, NoSuchElementException e) {
+        return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, EXCEPTION_GET_VOTE);
     }
 
     @ExceptionHandler(Exception.class)

@@ -15,8 +15,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-import static com.artemf29.core.testData.UserTestData.*;
-import static com.artemf29.core.web.user.ProfileRestController.REST_URL;
+import static com.artemf29.core.testdata.UserTestDataUtils.user;
+import static com.artemf29.core.testdata.UserTestDataUtils.admin;
+import static com.artemf29.core.testdata.UserTestDataUtils.USER_MATCHER;
+import static com.artemf29.core.testdata.UserTestDataUtils.USER_ID;
+import static com.artemf29.core.util.UrlUtil.PROFILE_URL;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -29,7 +32,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL)
+        perform(MockMvcRequestBuilders.get(PROFILE_URL)
                 .with(userHttpBasic(user)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -39,13 +42,13 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getUnAuth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
+        perform(MockMvcRequestBuilders.get(PROFILE_URL))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL)
+        perform(MockMvcRequestBuilders.delete(PROFILE_URL)
                 .with(userHttpBasic(user)))
                 .andExpect(status().isNoContent());
         USER_MATCHER.assertMatch(userRepository.findAll(), admin);
@@ -55,7 +58,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     void register() throws Exception {
         UserTo newTo = new UserTo(null, "new", "new@gmail.com", "newPass");
         User newUser = UserUtil.createNewFromTo(newTo);
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL + "/register")
+        ResultActions action = perform(MockMvcRequestBuilders.post(PROFILE_URL + "/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newTo)))
                 .andDo(print())
@@ -71,7 +74,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         UserTo updatedTo = new UserTo(null, "updated", "user@yandex.ru", "newPass");
-        perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.put(PROFILE_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(user))
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
@@ -83,7 +86,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void registerInvalid() throws Exception {
         UserTo newTo = new UserTo(null, null, null, null);
-        perform(MockMvcRequestBuilders.post(REST_URL + "/register")
+        perform(MockMvcRequestBuilders.post(PROFILE_URL + "/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newTo)))
                 .andDo(print())
@@ -93,7 +96,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void updateInvalid() throws Exception {
         UserTo updatedTo = new UserTo(null, null, "password", null);
-        perform(MockMvcRequestBuilders.put(REST_URL)
+        perform(MockMvcRequestBuilders.put(PROFILE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(user))
                 .content(JsonUtil.writeValue(updatedTo)))
@@ -104,7 +107,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void updateDuplicate() throws Exception {
         UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword");
-        perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.put(PROFILE_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(user))
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())

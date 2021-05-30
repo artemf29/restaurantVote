@@ -1,4 +1,4 @@
-package com.artemf29.core.testData;
+package com.artemf29.core.testdata;
 
 import com.artemf29.core.TestMatcher;
 import com.artemf29.core.model.Role;
@@ -10,7 +10,7 @@ import java.util.Date;
 
 import static com.artemf29.core.model.AbstractBaseEntity.START_SEQ;
 
-public class UserTestData {
+public class UserTestDataUtils {
     public static final TestMatcher<User> USER_MATCHER = TestMatcher.usingIgnoringFieldsComparator(User.class, "registered", "password");
 
     public static final int USER_ID = START_SEQ;

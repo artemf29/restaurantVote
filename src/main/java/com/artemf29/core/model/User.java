@@ -2,12 +2,11 @@ package com.artemf29.core.model;
 
 import com.artemf29.core.HasIdAndEmail;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.*;
+
+import org.hibernate.annotations.BatchSize;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
