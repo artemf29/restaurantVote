@@ -1,6 +1,6 @@
 package com.artemf29.core.web.user;
 
-import com.artemf29.core.AuthorizedUser;
+import com.artemf29.core.config.AuthorizedUser;
 import com.artemf29.core.model.User;
 import com.artemf29.core.to.UserTo;
 import org.springframework.http.HttpEntity;

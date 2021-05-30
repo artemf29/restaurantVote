@@ -1,4 +1,4 @@
-package com.artemf29.core;
+package com.artemf29.core.config;
 
 import com.artemf29.core.model.User;
 import com.artemf29.core.to.UserTo;
