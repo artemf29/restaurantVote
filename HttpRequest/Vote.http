@@ -1,28 +1,3 @@
-# ADMIN
-###
-# get all votes
-### curl -s http://localhost:8080/rest/admin/vote/getAll --user admin@gmail.com:admin
-GET http://localhost:8080/rest/admin/vote/getAll
-Authorization: Basic admin@gmail.com admin
-
-###
-# get all votes by user id 100001
-### curl -s http://localhost:8080/rest/admin/vote/getAll/100001 --user admin@gmail.com:admin
-GET http://localhost:8080/rest/admin/vote/getAll/100001
-Authorization: Basic admin@gmail.com admin
-
-###
-# get vote by id 100012 by user id 100001
-### curl -s http://localhost:8080/rest/admin/vote/100001/100012 --user admin@gmail.com:admin
-GET http://localhost:8080/rest/admin/vote/100001/100012
-Authorization: Basic admin@gmail.com admin
-
-###
-# delete vote by id 100012 by user id 100001
-### curl -s -X DELETE "http://localhost:8080/rest/admin/vote/100001/100012" --user admin@gmail.com:admin
-DELETE http://localhost:8080/rest/admin/vote/100001/100012
-Authorization: Basic admin@gmail.com admin
-
 # USER
 ###
 # create vote by restaurant id 100004

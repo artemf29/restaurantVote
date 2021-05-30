@@ -7,8 +7,8 @@
 # Restaurant selection voting system
 
 Enterprise Java project with registration/authorization and access rights based on roles (USER, ADMINISTRATOR).
-The administrator can create / edit / delete - dishes / restaurants / users, as well as view / delete voting results.
-Users can manage their profile and vote via the REST interface with basic authorization.
+The administrator can create / edit / delete - dishes / restaurants / users.
+Users can manage their profile, view restaurants and their menus, and vote via the REST interface with basic authorization.
 The entire REST interface is covered by JUnit tests using Spring MVC Test and Spring Security Test.
 
 ### Description:
@@ -61,23 +61,6 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 - delete user by id 100000
 
 `curl -s -X DELETE "http://localhost:8080/rest/admin/users/100000" --user admin@gmail.com:admin`
-
-### AdminVoteRestController
-- get all votes
-
-`curl -s http://localhost:8080/rest/admin/vote/getAll --user admin@gmail.com:admin`
-
-- get all votes by user id 100001
-
-`curl -s http://localhost:8080/rest/admin/vote/getAll/100001 --user admin@gmail.com:admin`
-
-- get vote by id 100012 by user id 100001
-
-`curl -s http://localhost:8080/rest/admin/vote/100001/100012 --user admin@gmail.com:admin`
-
-- delete vote by id 100012 by user id 100001
-
-`curl -s -X DELETE "http://localhost:8080/rest/admin/vote/100001/100012" --user admin@gmail.com:admin`
 
 ### RestaurantRestController
 - get all restaurants
