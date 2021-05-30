@@ -6,6 +6,7 @@ import com.artemf29.core.web.AbstractControllerTest;
 import com.artemf29.core.web.ExceptionInfoHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -13,12 +14,13 @@ import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_2_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_3_ID;
-import static com.artemf29.core.testdata.UserTestDataUtils.user;
 import static com.artemf29.core.testdata.UserTestDataUtils.USER_ID;
+import static com.artemf29.core.testdata.UserTestDataUtils.admin;
+import static com.artemf29.core.testdata.UserTestDataUtils.user;
 import static com.artemf29.core.testdata.VoteTestDataUtils.*;
-import static com.artemf29.core.testdata.VoteTestDataUtils.NOT_FOUND;
 import static com.artemf29.core.util.UrlUtil.PROFILE_VOTE_URL;
-import static java.time.LocalTime.*;
+import static java.time.LocalTime.now;
+import static java.time.LocalTime.of;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -29,6 +31,22 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     private VoteRepository voteRepository;
+
+    @Test
+    void getToday() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(admin)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(VOTE_MATCHER.contentJson(vote2));
+    }
+
+    @Test
+    void getUnAuth() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
 
     @Test
     void createUnAuth() throws Exception {
@@ -52,7 +70,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
                     .with(userHttpBasic(user)))
                     .andExpect(status().isOk());
 
-            VOTE_MATCHER.assertMatch(voteRepository.get(VOTE_1_ID, USER_ID).get(), updated);
+            VOTE_MATCHER.assertMatch(voteRepository.getById(VOTE_1_ID, USER_ID).get(), updated);
         }
     }
 
@@ -69,7 +87,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newVote.setId(newId);
         VOTE_MATCHER.assertMatch(created, newVote);
-        VOTE_MATCHER.assertMatch(voteRepository.get(newId, USER_ID).get(), newVote);
+        VOTE_MATCHER.assertMatch(voteRepository.getById(newId, USER_ID).get(), newVote);
     }
 
     @Test

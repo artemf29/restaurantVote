@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static com.artemf29.core.util.UrlUtil.PROFILE_VOTE_URL;
 import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
@@ -34,6 +35,12 @@ public class ProfileVoteRestController {
         this.restaurantRepository = restaurantRepository;
     }
 
+    @GetMapping("/")
+    public ResponseEntity<Vote> get(@AuthenticationPrincipal AuthorizedUser authUser) {
+        log.info("get for User{}", authUser.getId());
+        return ResponseEntity.of(Optional.of(voteRepository.getByDate(LocalDate.now(), authUser.getId()).get()));
+    }
+
     @PutMapping(value = "/{id}")
     public void update(@AuthenticationPrincipal AuthorizedUser authUser, @PathVariable int id, @RequestParam int restId) {
         reVotingPermission();
@@ -41,7 +48,7 @@ public class ProfileVoteRestController {
         log.info("update vote for user {} by id restaurant {}", userId, restId);
         Vote vote = new Vote(id, LocalDate.now());
         assureIdConsistent(vote, id);
-        checkNotFoundWithId(voteRepository.get(id, userId), "Vote id=" + id + " doesn't belong to user id=" + userId);
+        checkNotFoundWithId(voteRepository.getById(id, userId), "Vote id=" + id + " doesn't belong to user id=" + userId);
         checkNotFoundWithId(restaurantRepository.findById(restId), "Restaurant id=" + restId);
         vote.setUser(userRepository.getOne(userId));
         vote.setRestaurant(restaurantRepository.getOne(restId));

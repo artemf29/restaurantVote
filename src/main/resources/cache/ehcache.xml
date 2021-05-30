@@ -16,7 +16,7 @@
         <expiry>
             <none/>
         </expiry>
-        <heap>1</heap>
+        <heap>2</heap>
     </cache-template>
 
     <cache alias="restaurants" uses-template="singleNonExpiryCache"/>

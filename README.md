@@ -144,6 +144,10 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 `curl -s -X POST "http://localhost:8080/rest/profile/vote?restId=100004" --user user@yandex.ru:password`
 
+- get today's vote
+  
+`curl -s http://localhost:8080/rest/profile/vote/ --user user@yandex.ru:password`
+
 - update vote by restaurant id 100004 by vote id 100011 if local time is before 11am
 
 `curl -s -X PUT "http://localhost:8080/rest/profile/vote/100011?restId=100004" --user user@yandex.ru:password`
