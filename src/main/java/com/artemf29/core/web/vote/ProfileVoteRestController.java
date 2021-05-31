@@ -1,6 +1,6 @@
 package com.artemf29.core.web.vote;
 
-import com.artemf29.core.config.AuthorizedUser;
+import com.artemf29.core.AuthorizedUser;
 import com.artemf29.core.model.Vote;
 import com.artemf29.core.repository.RestaurantRepository;
 import com.artemf29.core.repository.UserRepository;

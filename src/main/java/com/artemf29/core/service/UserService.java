@@ -1,5 +1,6 @@
-package com.artemf29.core.config;
+package com.artemf29.core.service;
 
+import com.artemf29.core.AuthorizedUser;
 import com.artemf29.core.model.User;
 import com.artemf29.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = repository.getByEmail(email.toLowerCase()).get();
+        User user = repository
+                .getByEmail(email.toLowerCase())
+                .orElseThrow(() -> new UsernameNotFoundException("User " + email + " is not found"));
         return new AuthorizedUser(user);
     }
 }

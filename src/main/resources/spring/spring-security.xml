@@ -17,7 +17,7 @@
 
     <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder" factory-method="createDelegatingPasswordEncoder"/>
 
-    <context:component-scan base-package="com.artemf29.core.config"/>
+    <context:component-scan base-package="com.artemf29.core.service"/>
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
             <password-encoder ref="passwordEncoder"/>
