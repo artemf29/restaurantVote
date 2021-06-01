@@ -4,20 +4,23 @@ import com.artemf29.core.model.Restaurant;
 import com.artemf29.core.repository.RestaurantRepository;
 import com.artemf29.core.util.json.JsonUtil;
 import com.artemf29.core.web.AbstractControllerTest;
+import com.artemf29.core.web.ExceptionInfoHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.*;
 import static com.artemf29.core.testdata.UserTestDataUtils.admin;
 import static com.artemf29.core.util.UrlUtil.RESTAURANT_URL;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -128,5 +131,31 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        Restaurant invalid = new Restaurant(null, restaurant1.getName());
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(ExceptionInfoHandler.EXCEPTION_DUPLICATE_RESTAURANT_NAME)));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        Restaurant invalid = new Restaurant(RESTAURANT_1_ID, restaurant2.getName());
+        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(ExceptionInfoHandler.EXCEPTION_DUPLICATE_RESTAURANT_NAME)));
     }
 }

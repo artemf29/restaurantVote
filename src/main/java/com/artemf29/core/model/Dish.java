@@ -18,11 +18,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"menu_id", "name"}, name = "menu_unique_dish_name_idx")})
-public class Dish extends AbstractBaseEntity {
-
-    @Column(name = "name", nullable = false)
-    @NotNull
-    private String name;
+public class Dish extends AbstractNamedEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
@@ -44,14 +40,14 @@ public class Dish extends AbstractBaseEntity {
     }
 
     public Dish(Integer id, String name, int price, String description) {
-        super(id);
+        super(id, name);
         this.name = name;
         this.price = price;
         this.description = description;
     }
 
     public Dish(Integer id, String name, int price) {
-        super(id);
+        super(id, name);
         this.name = name;
         this.price = price;
     }
@@ -66,14 +62,6 @@ public class Dish extends AbstractBaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {

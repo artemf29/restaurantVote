@@ -5,13 +5,15 @@ import com.artemf29.core.model.Vote;
 import com.artemf29.core.to.VoteTo;
 
 import java.time.Month;
-import java.util.List;
 
-import static com.artemf29.core.testdata.RestaurantTestDataUtils.*;
+import static com.artemf29.core.model.AbstractBaseEntity.START_SEQ;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant1;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant2;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant3;
 import static com.artemf29.core.testdata.UserTestDataUtils.admin;
 import static com.artemf29.core.testdata.UserTestDataUtils.user;
-import static com.artemf29.core.model.AbstractBaseEntity.START_SEQ;
-import static java.time.LocalDate.*;
+import static java.time.LocalDate.now;
+import static java.time.LocalDate.of;
 
 public class VoteTestDataUtils {
     public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Vote.class, "user", "restaurant");
@@ -44,7 +46,7 @@ public class VoteTestDataUtils {
 
     public static Vote getUpdated() {
         Vote vote = new Vote(VOTE_1_ID, now());
-        vote.setUser(vote.getUser());
+        vote.setUser(vote1.getUser());
         vote.setRestaurant(restaurant3);
         return vote;
     }

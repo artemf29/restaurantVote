@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-
 import static com.artemf29.core.testdata.DishTestDataUtils.*;
 import static com.artemf29.core.testdata.MenuTestDataUtils.MENU_4_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_1_ID;
-import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_3_ID;
 import static com.artemf29.core.testdata.UserTestDataUtils.admin;
 import static com.artemf29.core.util.UrlUtil.DISH_URL;
 import static org.hamcrest.Matchers.containsString;

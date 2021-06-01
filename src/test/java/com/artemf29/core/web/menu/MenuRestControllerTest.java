@@ -1,27 +1,37 @@
 package com.artemf29.core.web.menu;
 
+import com.artemf29.core.model.Dish;
 import com.artemf29.core.model.Menu;
 import com.artemf29.core.repository.MenuRepository;
+import com.artemf29.core.testdata.DishTestDataUtils;
 import com.artemf29.core.util.json.JsonUtil;
 import com.artemf29.core.web.AbstractControllerTest;
+import com.artemf29.core.web.ExceptionInfoHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
+import static com.artemf29.core.testdata.DishTestDataUtils.DISH_1_ID;
+import static com.artemf29.core.testdata.DishTestDataUtils.dish1;
+import static com.artemf29.core.testdata.DishTestDataUtils.dish2;
 import static com.artemf29.core.testdata.MenuTestDataUtils.*;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_1_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_2_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_3_ID;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant1;
 import static com.artemf29.core.testdata.UserTestDataUtils.admin;
 import static com.artemf29.core.testdata.UserTestDataUtils.user;
 import static com.artemf29.core.util.UrlUtil.MENU_URL;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -142,5 +152,33 @@ class MenuRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        Menu invalid = new Menu(null,LocalDate.now(),List.of(dish1));
+        invalid.setRestaurant(restaurant1);
+        perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(ExceptionInfoHandler.EXCEPTION_DUPLICATE_MENU)));
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void updateDuplicate() throws Exception {
+        Menu invalid = new Menu(menu5.getId(), menu5.getDate(),menu5.getDishes());
+        invalid.setRestaurant(restaurant1);
+        perform(MockMvcRequestBuilders.put(REST_URL + MENU_5_ID, RESTAURANT_1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(ExceptionInfoHandler.EXCEPTION_DUPLICATE_MENU)));
     }
 }
