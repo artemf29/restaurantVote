@@ -1,0 +1,86 @@
+package com.artemf29.core.web.menu;
+
+import com.artemf29.core.model.Menu;
+import com.artemf29.core.repository.MenuRepository;
+import com.artemf29.core.repository.RestaurantRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
+
+import static com.artemf29.core.util.UrlUtil.MENU_URL;
+import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
+import static com.artemf29.core.util.ValidationUtil.checkNew;
+import static com.artemf29.core.util.ValidationUtil.checkNotFoundWithId;
+import static com.artemf29.core.util.ValidationUtil.checkSingleModification;
+
+@RestController
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+public class MenuRestController {
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
+    private final MenuRepository menuRepository;
+    private final RestaurantRepository restaurantRepository;
+
+    public MenuRestController(MenuRepository menuRepository, RestaurantRepository restaurantRepository) {
+        this.menuRepository = menuRepository;
+        this.restaurantRepository = restaurantRepository;
+    }
+
+    @GetMapping(MENU_URL + "/{id}")
+    public ResponseEntity<Menu> get(@PathVariable int restId, @PathVariable int id) {
+        log.info("get menu {} for restaurant {}", id, restId);
+        return ResponseEntity.of(menuRepository.getById(id, restId));
+    }
+
+    @GetMapping(MENU_URL + "/{id}/with-dish")
+    public ResponseEntity<Menu> getWithDish(@PathVariable int restId, @PathVariable int id) {
+        log.info("getWithDish {} for restaurants {}", id, restId);
+        return ResponseEntity.of(menuRepository.getRestaurantWithDish(id, restId, LocalDate.now()));
+    }
+
+    @DeleteMapping(MENU_URL + "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int restId, @PathVariable int id) {
+        log.info("delete menu {} for restaurants {}", id, restId);
+        checkSingleModification(menuRepository.delete(id, restId), "Menu id=" + id + ", Restaurant id=" + restId + " not found");
+    }
+
+    @PutMapping(value = MENU_URL + "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@Valid @RequestBody Menu menu, @PathVariable int restId, @PathVariable int id) {
+        log.info("update menu {} by id {} for restaurant {}", menu, id, restId);
+        assureIdConsistent(menu, id);
+        checkNotFoundWithId(restaurantRepository.findById(restId), "Restaurant id=" + restId);
+        checkNotFoundWithId(menuRepository.getByDate(LocalDate.now(), restId), "Restaurant id=" + restId);
+        menu.setRestaurant(restaurantRepository.getOne(restId));
+        menuRepository.save(menu);
+    }
+
+    @PostMapping(value = MENU_URL, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Menu> createWithLocation(@Valid @RequestBody Menu menu, @PathVariable int restId) {
+        log.info("create menu {} for restaurant {}", menu, restId);
+        checkNew(menu);
+        checkNotFoundWithId(restaurantRepository.findById(restId), "Restaurant id=" + restId);
+        menu.setRestaurant(restaurantRepository.getOne(restId));
+        Menu created = menuRepository.save(menu);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(MENU_URL + "/{id}")
+                .buildAndExpand(restId, created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @GetMapping("/rest/restaurants/menu/with-dishes")
+    public List<Menu> getAllWithDish() {
+        log.info("getAll menus with restaurants with menu");
+        return menuRepository.getAllRestaurantWithDish(LocalDate.now());
+    }
+}

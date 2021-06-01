@@ -17,7 +17,6 @@ import static com.artemf29.core.TestUtil.userHttpBasic;
 
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.*;
 import static com.artemf29.core.testdata.UserTestDataUtils.admin;
-import static com.artemf29.core.testdata.UserTestDataUtils.user;
 import static com.artemf29.core.util.UrlUtil.RESTAURANT_URL;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,16 +38,6 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(restaurant2));
-    }
-
-    @Test
-    void getWithDish() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_3_ID + "/with-dish")
-                .with(userHttpBasic(admin)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_WITH_DISHES_MATCHER.contentJson(restaurant3));
     }
 
     @Test
@@ -118,15 +107,6 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
         newRest.setId(newId);
         RESTAURANT_MATCHER.assertMatch(created, newRest);
         RESTAURANT_MATCHER.assertMatch(restaurantRepository.getOne(newId), newRest);
-    }
-
-    @Test
-    void getAllWithDish() throws Exception {
-        perform(MockMvcRequestBuilders.get("/rest/restaurants/with-dishes")
-                .with(userHttpBasic(user)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(restaurantRepository.getAllWithDish()));
     }
 
     @Test

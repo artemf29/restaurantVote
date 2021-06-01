@@ -18,28 +18,22 @@ public class VoteTestDataUtils {
     public static final TestMatcher<VoteTo> VOTE_TO_MATCHER = TestMatcher.usingEqualsComparator(VoteTo.class);
 
     public static final int NOT_FOUND = 102;
-    public static final int VOTE_1_ID = START_SEQ + 11;
-    public static final int VOTE_2_ID = START_SEQ + 12;
-    public static final int VOTE_3_ID = START_SEQ + 13;
-    public static final int VOTE_4_ID = START_SEQ + 14;
+    public static final int VOTE_1_ID = START_SEQ + 17;
+    public static final int VOTE_2_ID = START_SEQ + 18;
+    public static final int VOTE_3_ID = START_SEQ + 19;
 
-    public static final Vote vote1 = new Vote(VOTE_1_ID, of(2021, Month.APRIL, 28));
-    public static final Vote vote2 = new Vote(VOTE_2_ID, now());
+    public static final Vote vote1 = new Vote(VOTE_1_ID, now());
+    public static final Vote vote2 = new Vote(VOTE_2_ID, of(2021, Month.MARCH, 8));
     public static final Vote vote3 = new Vote(VOTE_3_ID, of(2021, Month.MARCH, 8));
-    public static final Vote vote4 = new Vote(VOTE_4_ID, of(2021, Month.MARCH, 8));
 
     static {
-        vote1.setUser(user);
-        vote1.setRestaurant(restaurant1);
-        vote2.setUser(admin);
-        vote2.setRestaurant(restaurant2);
-        vote3.setUser(user);
-        vote3.setRestaurant(restaurant1);
-        vote4.setUser(admin);
-        vote4.setRestaurant(restaurant3);
+        vote1.setUser(admin);
+        vote1.setRestaurant(restaurant2);
+        vote2.setUser(user);
+        vote2.setRestaurant(restaurant1);
+        vote3.setUser(admin);
+        vote3.setRestaurant(restaurant3);
     }
-
-    public static final List<Vote> voteUser = List.of(vote1, vote3);
 
     public static Vote getNew() {
         Vote vote = new Vote(null, now());
@@ -51,7 +45,7 @@ public class VoteTestDataUtils {
     public static Vote getUpdated() {
         Vote vote = new Vote(VOTE_1_ID, now());
         vote.setUser(vote.getUser());
-        vote.setRestaurant(restaurant2);
+        vote.setRestaurant(restaurant3);
         return vote;
     }
 }

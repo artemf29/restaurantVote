@@ -40,7 +40,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_TO_MATCHER.contentJson(VoteUtil.createTo(vote2)));
+                .andExpect(VOTE_TO_MATCHER.contentJson(VoteUtil.createTo(vote1)));
     }
 
     @Test
