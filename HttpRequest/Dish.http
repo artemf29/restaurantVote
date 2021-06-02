@@ -6,8 +6,7 @@ Authorization: Basic admin@gmail.com admin
 
 ###
 # create dish by menu id 100008 by restaurant id 100002
-### curl -s -X POST "http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes"
-### -H "Content-Type: application/json" -d "{\"name\":\"new dish\",\"price\":1000,\"description\":\"new\"}" --user admin@gmail.com:admin
+### curl -s -X POST "http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes" -H "Content-Type: application/json" -d "{\"name\":\"new dish\",\"price\":1000,\"description\":\"new\"}" --user admin@gmail.com:admin
 POST http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
@@ -20,8 +19,7 @@ Content-Type: application/json
 
 ###
 # update dish by id 100011 by menu id 100008 by restaurant id 100002
-### curl -s -X PUT "http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011"
-### -H "Content-Type: application/json" -d "{\"name\":\"update dish\",\"price\":999,\"description\":\"update\"}" --user admin@gmail.com:admin
+### curl -s -X PUT "http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011" -H "Content-Type: application/json" -d "{\"name\":\"update dish\",\"price\":999,\"description\":\"update\"}" --user admin@gmail.com:admin
 PUT http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json

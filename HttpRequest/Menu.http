@@ -6,8 +6,7 @@ Authorization: Basic admin@gmail.com admin
 
 ###
 # create menu by restaurant id 100004
-### curl -X POST --location "http://localhost:8080/rest/admin/restaurants/100004/menu" -H "Content-Type: application/json"
-### -d "{\"dishes\": [{}], \"restaurant\": { \"id\": 100004 } }" --user admin@gmail.com:admin
+### curl -X POST --location "http://localhost:8080/rest/admin/restaurants/100004/menu" -H "Content-Type: application/json" -d "{\"dishes\": [{}], \"restaurant\": { \"id\": 100004 } }" --user admin@gmail.com:admin
 POST http://localhost:8080/rest/admin/restaurants/100004/menu
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
@@ -29,12 +28,12 @@ Authorization: Basic admin@gmail.com admin
 
 ###
 # get menu by id 100008 with restaurant by id 100002 with dishes
-### curl -s http://localhost:8080/rest/admin/restaurants/100002/with-dish --user user@yandex.ru:password
+### curl -s http://localhost:8080/rest/restaurants/100002/menu/100008/with-dishes --user user@yandex.ru:password
 GET http://localhost:8080/rest/restaurants/100002/menu/100008/with-dishes
 Authorization: Basic user@yandex.ru password
 
 ###
-# get all menus with restaurants with dish
+# get all menus with restaurants with dishes
 ### curl -s http://localhost:8080/rest/restaurants/menu/with-dishes --user user@yandex.ru:password
 GET http://localhost:8080/rest/restaurants/menu/with-dishes
 Authorization: Basic user@yandex.ru password
