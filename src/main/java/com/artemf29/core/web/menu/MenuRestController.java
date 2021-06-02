@@ -41,12 +41,6 @@ public class MenuRestController {
         return ResponseEntity.of(menuRepository.getById(id, restId));
     }
 
-    @GetMapping(MENU_URL + "/{id}/with-dish")
-    public ResponseEntity<Menu> getWithDish(@PathVariable int restId, @PathVariable int id) {
-        log.info("getWithDish {} for restaurants {}", id, restId);
-        return ResponseEntity.of(menuRepository.getRestaurantWithDish(id, restId, LocalDate.now()));
-    }
-
     @DeleteMapping(MENU_URL + "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int restId, @PathVariable int id) {
@@ -78,9 +72,15 @@ public class MenuRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @GetMapping("/rest/restaurants/{restId}/menu/{id}/with-dishes")
+    public ResponseEntity<Menu> getWithDish(@PathVariable int restId, @PathVariable int id) {
+        log.info("getWithDish {} for restaurants {}", id, restId);
+        return ResponseEntity.of(menuRepository.getRestaurantWithDish(id, restId, LocalDate.now()));
+    }
+
     @GetMapping("/rest/restaurants/menu/with-dishes")
     public List<Menu> getAllWithDish() {
-        log.info("getAll menus with restaurants with menu");
+        log.info("getAll menus with restaurants with dishes");
         return menuRepository.getAllRestaurantWithDish(LocalDate.now());
     }
 }

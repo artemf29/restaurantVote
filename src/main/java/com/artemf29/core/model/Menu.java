@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,9 +16,9 @@ public class Menu extends AbstractBaseEntity {
 
     @Column(name = "date", nullable = false, columnDefinition = "default now()")
     @NotNull
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
 
-    @NotNull
+    @NotEmpty
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference

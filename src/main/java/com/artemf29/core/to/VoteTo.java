@@ -1,5 +1,6 @@
 package com.artemf29.core.to;
 
+import javax.validation.constraints.NotBlank;
 import java.beans.ConstructorProperties;
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,10 +11,13 @@ public class VoteTo extends BaseTo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @NotBlank
     private final LocalDate date;
 
+    @NotBlank
     private final int restId;
 
+    @NotBlank
     private final String restName;
 
     @ConstructorProperties({"id", "date", "restId", "restName"})

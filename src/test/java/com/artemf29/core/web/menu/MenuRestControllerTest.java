@@ -1,9 +1,7 @@
 package com.artemf29.core.web.menu;
 
-import com.artemf29.core.model.Dish;
 import com.artemf29.core.model.Menu;
 import com.artemf29.core.repository.MenuRepository;
-import com.artemf29.core.testdata.DishTestDataUtils;
 import com.artemf29.core.util.json.JsonUtil;
 import com.artemf29.core.web.AbstractControllerTest;
 import com.artemf29.core.web.ExceptionInfoHandler;
@@ -20,9 +18,7 @@ import java.util.List;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-import static com.artemf29.core.testdata.DishTestDataUtils.DISH_1_ID;
 import static com.artemf29.core.testdata.DishTestDataUtils.dish1;
-import static com.artemf29.core.testdata.DishTestDataUtils.dish2;
 import static com.artemf29.core.testdata.MenuTestDataUtils.*;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_1_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_2_ID;
@@ -56,7 +52,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getWithDish() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + MENU_5_ID + "/with-dish", RESTAURANT_2_ID)
+        perform(MockMvcRequestBuilders.get("/rest/restaurants/{restId}/menu/" + MENU_5_ID + "/with-dishes", RESTAURANT_2_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -130,7 +126,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_MATCHER.contentJson(menuRepository.getAllRestaurantWithDish(LocalDate.now())));
+                .andExpect(MENU_WITH_RESTAURANT_AND_DISHES_MATCHER.contentJson(menuRepository.getAllRestaurantWithDish(LocalDate.now())));
     }
 
     @Test
@@ -157,7 +153,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional(propagation = Propagation.NEVER)
     void createDuplicate() throws Exception {
-        Menu invalid = new Menu(null,LocalDate.now(),List.of(dish1));
+        Menu invalid = new Menu(null, LocalDate.now(), List.of(dish1));
         invalid.setRestaurant(restaurant1);
         perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -171,7 +167,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional(propagation = Propagation.NEVER)
     void updateDuplicate() throws Exception {
-        Menu invalid = new Menu(menu5.getId(), menu5.getDate(),menu5.getDishes());
+        Menu invalid = new Menu(menu5.getId(), menu5.getDate(), menu5.getDishes());
         invalid.setRestaurant(restaurant1);
         perform(MockMvcRequestBuilders.put(REST_URL + MENU_5_ID, RESTAURANT_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -19,7 +19,7 @@ public class Vote extends AbstractBaseEntity {
 
     @Column(name = "vote_date", nullable = false, columnDefinition = "default now()")
     @NotNull
-    private LocalDate voteDate;
+    private LocalDate voteDate = LocalDate.now();
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

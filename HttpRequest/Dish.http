@@ -1,20 +1,14 @@
 ###
-# get all dishes by restaurant id 100002
-### curl -s http://localhost:8080/rest/admin/restaurants/100002/dishes --user admin@gmail.com:admin
-GET http://localhost:8080/rest/admin/restaurants/100002/dishes
+# get dish by id 100011 by menu id 100008 by restaurant id 100002
+### curl -s http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011 --user admin@gmail.com:admin
+GET http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011
 Authorization: Basic admin@gmail.com admin
 
 ###
-# get dish by id 100007 by restaurant id 100002
-### curl -s http://localhost:8080/rest/admin/restaurants/100002/dishes/100007 --user admin@gmail.com:admin
-GET http://localhost:8080/rest/admin/restaurants/100002/dishes/100007
-Authorization: Basic admin@gmail.com admin
-
-###
-# create dish by restaurant id 100002
-### curl -s -X POST "http://localhost:8080/rest/admin/restaurants/100002/dishes"
+# create dish by menu id 100008 by restaurant id 100002
+### curl -s -X POST "http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes"
 ### -H "Content-Type: application/json" -d "{\"name\":\"new dish\",\"price\":1000,\"description\":\"new\"}" --user admin@gmail.com:admin
-POST http://localhost:8080/rest/admin/restaurants/100002/dishes
+POST http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
 
@@ -25,10 +19,10 @@ Content-Type: application/json
 }
 
 ###
-# update dish by id 100007 by restaurant id 100002
-### curl -s -X PUT "http://localhost:8080/rest/admin/restaurants/100002/dishes/100007"
+# update dish by id 100011 by menu id 100008 by restaurant id 100002
+### curl -s -X PUT "http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011"
 ### -H "Content-Type: application/json" -d "{\"name\":\"update dish\",\"price\":999,\"description\":\"update\"}" --user admin@gmail.com:admin
-PUT http://localhost:8080/rest/admin/restaurants/100002/dishes/100007
+PUT http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
 
@@ -39,15 +33,15 @@ Content-Type: application/json
 }
 
 ###
-# delete dish by id 100007 by restaurant id 100002
-### curl -s -X DELETE "http://localhost:8080/rest/admin/restaurants/100002/dishes/100007" --user admin@gmail.com:admin
-DELETE http://localhost:8080/rest/admin/restaurants/100002/dishes/100007
+# delete dish by id 100011 by menu id 100008 by restaurant id 100002
+### curl -s -X DELETE "http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011" --user admin@gmail.com:admin
+DELETE http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100011
 Authorization: Basic admin@gmail.com admin
 
 ###
 # get dish not found
-### curl -s http://localhost:8080/rest/admin/restaurants/100002/dishes/100015 --user admin@gmail.com:admin
-GET http://localhost:8080/rest/admin/restaurants/100002/dishes/100001
+### curl -s http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100001 --user admin@gmail.com:admin
+GET http://localhost:8080/rest/admin/restaurants/100002/menu/100008/dishes/100001
 Authorization: Basic admin@gmail.com admin
 
 

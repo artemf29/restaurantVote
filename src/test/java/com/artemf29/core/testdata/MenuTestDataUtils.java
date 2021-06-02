@@ -3,7 +3,6 @@ package com.artemf29.core.testdata;
 import com.artemf29.core.TestMatcher;
 import com.artemf29.core.model.Menu;
 
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
@@ -14,19 +13,10 @@ import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant2;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant3;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.of;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class MenuTestDataUtils {
     public static final TestMatcher<Menu> MENU_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Menu.class, "dishes", "restaurant");
-
-    public static TestMatcher<Menu> MENU_WITH_RESTAURANT_AND_DISHES_MATCHER =
-            TestMatcher.usingAssertions(Menu.class,
-//     No need use ignoringAllOverriddenEquals, see https://assertj.github.io/doc/#breaking-changes
-                    (a, e) -> assertThat(a).usingRecursiveComparison()
-                            .ignoringFields("dishes.menu").isEqualTo(e),
-                    (a, e) -> {
-                        throw new UnsupportedOperationException();
-                    });
+    public static TestMatcher<Menu> MENU_WITH_RESTAURANT_AND_DISHES_MATCHER = TestMatcher.usingRecursiveComparisons(Menu.class,"dishes.menu");
 
     public static final int NOT_FOUND = 104;
     public static final int MENU_1_ID = START_SEQ + 5;
@@ -38,7 +28,7 @@ public class MenuTestDataUtils {
     public static final Menu menu1 = new Menu(MENU_1_ID, of(2021, Month.MARCH, 8), List.of(dish3));
     public static final Menu menu2 = new Menu(MENU_2_ID, of(2021, Month.MARCH, 8), List.of(dish4));
     public static final Menu menu3 = new Menu(MENU_3_ID, of(2021, Month.MARCH, 8), List.of(dish7));
-    public static final Menu menu4 = new Menu(MENU_4_ID, now(), List.of(dish1, dish2));
+    public static final Menu menu4 = new Menu(MENU_4_ID, now(), List.of(dish2, dish1));
     public static final Menu menu5 = new Menu(MENU_5_ID, now(), List.of(dish5, dish6));
 
     static {
