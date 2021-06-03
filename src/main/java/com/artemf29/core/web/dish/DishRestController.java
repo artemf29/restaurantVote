@@ -45,7 +45,7 @@ public class DishRestController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int restId, @PathVariable int menuId, @PathVariable int id) {
-        log.info("delete {} for menu {} for restaurant {}", id, menuId, restId);
+        log.info("delete {} for menu {} for restaurant{}", id, menuId, restId);
         checkSingleModification(dishRepository.delete(id, menuId), "Dish id=" + id + ", Menu id=" + menuId + " missed");
     }
 
@@ -53,21 +53,20 @@ public class DishRestController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restId, @PathVariable int menuId, @PathVariable int id) {
-        log.info("update {} by id {} for restaurant {}", dish, id, restId);
+        log.info("update {} by id {} for menu {} for restaurant {}", dish, id, menuId, restId);
         assureIdConsistent(dish, id);
-        checkNotFoundWithId(menuRepository.getById(menuId, restId), "Menu id = " + menuId + "for Restaurant id=" + restId);
-        dish.setMenu(menuRepository.getByDate(LocalDate.now(), restId).get());
-        checkNotFoundWithId(dishRepository.get(id, menuId), "Dish id=" + id + " doesn't belong to restaurant id=" + restId);
+        checkNotFoundWithId(dishRepository.get(id, menuId), "Dish id=" + id + " doesn't belong to menu id=" + menuId);
+        dish.setMenu(menuRepository.getById(menuId, restId).get());
         dishRepository.save(dish);
     }
 
     @CacheEvict(value = "menus", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody Dish dish, @PathVariable int restId, @PathVariable int menuId) {
-        log.info("create {} for restaurant {}", dish, restId);
+        log.info("create {} for menu{} for restaurant {}", dish, menuId, restId);
         checkNew(dish);
         checkNotFoundWithId(menuRepository.getById(menuId, restId), "Menu id = " + menuId + "for Restaurant id=" + restId);
-        dish.setMenu(menuRepository.getByDate(LocalDate.now(), restId).get());
+        dish.setMenu(menuRepository.getById(menuId, restId).get());
         Dish created = dishRepository.save(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(DISH_URL + "/{id}")

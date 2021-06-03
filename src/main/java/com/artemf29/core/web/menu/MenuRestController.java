@@ -63,7 +63,6 @@ public class MenuRestController {
     public void update(@Valid @RequestBody Menu menu, @PathVariable int restId, @PathVariable int id) {
         log.info("update menu {} by id {} for restaurant {}", menu, id, restId);
         assureIdConsistent(menu, id);
-        checkNotFoundWithId(restaurantRepository.findById(restId), "Restaurant id=" + restId);
         checkNotFoundWithId(menuRepository.getByDate(LocalDate.now(), restId), "Restaurant id=" + restId);
         menu.setRestaurant(restaurantRepository.getOne(restId));
         menuRepository.save(menu);
@@ -82,12 +81,14 @@ public class MenuRestController {
                 .buildAndExpand(restId, created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
+
     @Cacheable("menus")
     @GetMapping("/rest/restaurants/{restId}/menu/{id}/with-dishes")
     public ResponseEntity<Menu> getWithDish(@PathVariable int restId, @PathVariable int id) {
         log.info("getWithDish {} for restaurants {}", id, restId);
         return ResponseEntity.of(menuRepository.getRestaurantWithDish(id, restId, LocalDate.now()));
     }
+
     @Cacheable("menus")
     @GetMapping("/rest/restaurants/menu/with-dishes")
     public List<Menu> getAllWithDish() {
