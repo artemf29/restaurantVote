@@ -52,7 +52,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getByDate() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL +"by?date=" + menu2.getDate(), RESTAURANT_2_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL +  "by?date=" + menu2.getDate(), RESTAURANT_2_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -62,7 +62,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getWithDish() throws Exception {
-        perform(MockMvcRequestBuilders.get("/rest/restaurants/{restId}/menu/" + MENU_5_ID + "/with-dishes", RESTAURANT_2_ID)
+        perform(MockMvcRequestBuilders.get("/rest/restaurants/{restId}/menu/{id}/with-dishes", RESTAURANT_2_ID, MENU_5_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -109,7 +109,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        MENU_MATCHER.assertMatch(menuRepository.getByDate(LocalDate.now(), RESTAURANT_1_ID).get(), updated);
+        MENU_MATCHER.assertMatch(menuRepository.getByDate(MENU_4_ID, LocalDate.now(), RESTAURANT_1_ID).get(), updated);
     }
 
     @Test
@@ -126,7 +126,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newMenu.setId(newId);
         MENU_MATCHER.assertMatch(created, newMenu);
-        MENU_MATCHER.assertMatch(menuRepository.getByDate(LocalDate.now(), RESTAURANT_3_ID).get(), newMenu);
+        MENU_MATCHER.assertMatch(menuRepository.getByDate(newId, LocalDate.now(), RESTAURANT_3_ID).get(), newMenu);
     }
 
     @Test
@@ -166,20 +166,6 @@ class MenuRestControllerTest extends AbstractControllerTest {
         Menu invalid = new Menu(null, LocalDate.now(), List.of(dish1));
         invalid.setRestaurant(restaurant1);
         perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(invalid))
-                .with(userHttpBasic(admin)))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(content().string(containsString(ExceptionInfoHandler.EXCEPTION_DUPLICATE_MENU)));
-    }
-
-    @Test
-    @Transactional(propagation = Propagation.NEVER)
-    void updateDuplicate() throws Exception {
-        Menu invalid = new Menu(menu5.getId(), menu5.getDate(), menu5.getDishes());
-        invalid.setRestaurant(restaurant1);
-        perform(MockMvcRequestBuilders.put(REST_URL + MENU_5_ID, RESTAURANT_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))

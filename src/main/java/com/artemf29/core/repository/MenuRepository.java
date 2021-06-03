@@ -22,15 +22,14 @@ public interface MenuRepository extends BaseRepository<Menu> {
     @Query("SELECT m FROM Menu m WHERE m.id=:id AND m.restaurant.id=:restId")
     Optional<Menu> getById(@Param("id") int id, @Param("restId") int restId);
 
-    @EntityGraph(attributePaths = {"dishes","restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT m FROM Menu m WHERE m.date=:date AND m.restaurant.id=:restId")
-    Optional<Menu> getByDate(@Param("date") LocalDate date, @Param("restId") int restId);
-
-    @EntityGraph(attributePaths = {"dishes","restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE m.date=:date AND m.id=:id AND m.restaurant.id=:restId")
-    Optional<Menu> getRestaurantWithDish(@Param("id") int id, @Param("restId") int restId, @Param("date") LocalDate date);
+    Optional<Menu> getByDate(@Param("id") int id, @Param("date") LocalDate date, @Param("restId") int restId);
 
-    @EntityGraph(attributePaths = {"dishes","restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"dishes", "restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT m FROM Menu m WHERE m.date=:date AND m.restaurant.id=:restId")
+    Optional<Menu> getRestaurantWithDish(@Param("restId") int restId, @Param("date") LocalDate date);
+
+    @EntityGraph(attributePaths = {"dishes", "restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE m.date=:date")
     List<Menu> getAllRestaurantWithDish(@Param("date") LocalDate date);
 }

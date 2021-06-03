@@ -14,8 +14,8 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 ### Description:
 <pre>
 * 2 types of users: administrator and regular users
-* The administrator can enter the restaurant and its dishes of the day (usually 2-5 items, only the name of the dish and the price)
-* Dishes change every day (updates are made by administrators)
+* Admin can input a restaurant and it's lunch menu of the day (2-5 items usually, just a dish name and price)
+* Menu change every day (updates are made by administrators)
 * Every restaurant offers a new menu every day
 * Users can vote on which restaurant they want to visit
 * Only one vote is counted per user
@@ -175,5 +175,5 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 ***
 ### Caching(EHCACHE)
 App caches 2 methods from the Menu for two hours (earlier, if changes are made):
-1. getWithDish(restId, id) - get menu by id with restaurant by restId with all its dishes
-2. getAllWithDish() - get all menus with all restaurants and all their dishes
+1. getRestaurantWithDish(restId, id) - get menu by id with restaurant by restId with all its dishes
+2. getAllRestaurantWithDish() - get all menus with all restaurants and all their dishes

@@ -46,7 +46,7 @@ public class MenuRestController {
     @GetMapping(MENU_URL + "/by")
     public ResponseEntity<Menu> getByDate(@PathVariable int restId, @RequestParam LocalDate date) {
         log.info("get menu by date {} for restaurant {}", date, restId);
-        return ResponseEntity.of(menuRepository.getByDate(date, restId));
+        return ResponseEntity.of(menuRepository.getRestaurantWithDish(restId, date));
     }
 
     @CacheEvict(value = "menus", allEntries = true)
@@ -63,7 +63,7 @@ public class MenuRestController {
     public void update(@Valid @RequestBody Menu menu, @PathVariable int restId, @PathVariable int id) {
         log.info("update menu {} by id {} for restaurant {}", menu, id, restId);
         assureIdConsistent(menu, id);
-        checkNotFoundWithId(menuRepository.getByDate(LocalDate.now(), restId), "Restaurant id=" + restId);
+        checkNotFoundWithId(menuRepository.getByDate(id, LocalDate.now(), restId), "Menu id=" + id + ", Restaurant id=" + restId + " not found");
         menu.setRestaurant(restaurantRepository.getOne(restId));
         menuRepository.save(menu);
     }
@@ -84,14 +84,14 @@ public class MenuRestController {
 
     @Cacheable("menus")
     @GetMapping("/rest/restaurants/{restId}/menu/{id}/with-dishes")
-    public ResponseEntity<Menu> getWithDish(@PathVariable int restId, @PathVariable int id) {
+    public ResponseEntity<Menu> getRestaurantWithDish(@PathVariable int restId, @PathVariable int id) {
         log.info("getWithDish {} for restaurants {}", id, restId);
-        return ResponseEntity.of(menuRepository.getRestaurantWithDish(id, restId, LocalDate.now()));
+        return ResponseEntity.of(menuRepository.getRestaurantWithDish(restId, LocalDate.now()));
     }
 
     @Cacheable("menus")
     @GetMapping("/rest/restaurants/menu/with-dishes")
-    public List<Menu> getAllWithDish() {
+    public List<Menu> getAllRestaurantWithDish() {
         log.info("getAll menus with restaurants with dishes");
         return menuRepository.getAllRestaurantWithDish(LocalDate.now());
     }

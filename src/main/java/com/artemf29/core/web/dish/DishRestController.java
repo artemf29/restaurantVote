@@ -55,6 +55,7 @@ public class DishRestController {
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restId, @PathVariable int menuId, @PathVariable int id) {
         log.info("update {} by id {} for menu {} for restaurant {}", dish, id, menuId, restId);
         assureIdConsistent(dish, id);
+        checkNotFoundWithId(menuRepository.getByDate(menuId, LocalDate.now(), restId), "Menu id = " + menuId + "for Restaurant id=" + restId);
         checkNotFoundWithId(dishRepository.get(id, menuId), "Dish id=" + id + " doesn't belong to menu id=" + menuId);
         dish.setMenu(menuRepository.getById(menuId, restId).get());
         dishRepository.save(dish);
@@ -65,7 +66,7 @@ public class DishRestController {
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody Dish dish, @PathVariable int restId, @PathVariable int menuId) {
         log.info("create {} for menu{} for restaurant {}", dish, menuId, restId);
         checkNew(dish);
-        checkNotFoundWithId(menuRepository.getById(menuId, restId), "Menu id = " + menuId + "for Restaurant id=" + restId);
+        checkNotFoundWithId(menuRepository.getByDate(menuId, LocalDate.now(), restId), "Menu id = " + menuId + "for Restaurant id=" + restId);
         dish.setMenu(menuRepository.getById(menuId, restId).get());
         Dish created = dishRepository.save(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
