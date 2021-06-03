@@ -5,6 +5,7 @@ import com.artemf29.core.repository.DishRepository;
 import com.artemf29.core.repository.MenuRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,7 @@ public class DishRestController {
         return ResponseEntity.of(dishRepository.get(id, menuId));
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int restId, @PathVariable int menuId, @PathVariable int id) {
@@ -47,6 +49,7 @@ public class DishRestController {
         checkSingleModification(dishRepository.delete(id, menuId), "Dish id=" + id + ", Menu id=" + menuId + " missed");
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Dish dish, @PathVariable int restId, @PathVariable int menuId, @PathVariable int id) {
@@ -58,6 +61,7 @@ public class DishRestController {
         dishRepository.save(dish);
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody Dish dish, @PathVariable int restId, @PathVariable int menuId) {
         log.info("create {} for restaurant {}", dish, restId);

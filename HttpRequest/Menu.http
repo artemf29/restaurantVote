@@ -5,6 +5,12 @@ GET http://localhost:8080/rest/admin/restaurants/100002/menu/100008
 Authorization: Basic admin@gmail.com admin
 
 ###
+# get menu by date 2021-03-08  by restaurant id 100002
+### curl -s http://localhost:8080/rest/admin/restaurants/100002/menu/by?date=2021-03-08 --user admin@gmail.com:admin
+GET http://localhost:8080/rest/admin/restaurants/100002/menu/by?date=2021-03-08
+Authorization: Basic admin@gmail.com admin
+
+###
 # create menu by restaurant id 100004
 ### curl -X POST --location "http://localhost:8080/rest/admin/restaurants/100004/menu" -H "Content-Type: application/json" -d "{\"dishes\": [{}], \"restaurant\": { \"id\": 100004 } }" --user admin@gmail.com:admin
 POST http://localhost:8080/rest/admin/restaurants/100004/menu

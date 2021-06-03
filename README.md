@@ -103,6 +103,10 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 `curl -s http://localhost:8080/rest/admin/restaurants/100002/menu/100008 --user admin@gmail.com:admin`
 
+- get menu by date 2021-03-08 by restaurant id 100002
+  
+`curl -s http://localhost:8080/rest/admin/restaurants/100002/menu/by?date=2021-03-08 --user admin@gmail.com:admin`
+
 - create menu by restaurant id 100004
 
 `curl -X POST --location "http://localhost:8080/rest/admin/restaurants/100004/menu" -H "Content-Type: application/json" -d "{\"dishes\": [{}], \"restaurant\": { \"id\": 100004 } }" --user admin@gmail.com:admin`
@@ -171,5 +175,5 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 ***
 ### Caching(EHCACHE)
 App caches 2 methods from the Menu for two hours (earlier, if changes are made):
-1. getAll() - get all restaurants - for admins
-2. getAllRestWithDish() - get all restaurants with dishes - for admins and users
+1. getWithDish(restId, id) - get menu by id with restaurant by restId with all its dishes
+2. getAllWithDish() - get all menus with all restaurants and all their dishes

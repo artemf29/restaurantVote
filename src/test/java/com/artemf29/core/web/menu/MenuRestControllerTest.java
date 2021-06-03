@@ -51,6 +51,16 @@ class MenuRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getByDate() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL +"by?date=" + menu2.getDate(), RESTAURANT_2_ID)
+                .with(userHttpBasic(admin)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MENU_MATCHER.contentJson(menu2));
+    }
+
+    @Test
     void getWithDish() throws Exception {
         perform(MockMvcRequestBuilders.get("/rest/restaurants/{restId}/menu/" + MENU_5_ID + "/with-dishes", RESTAURANT_2_ID)
                 .with(userHttpBasic(admin)))

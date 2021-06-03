@@ -4,6 +4,7 @@ import com.artemf29.core.model.Restaurant;
 import com.artemf29.core.repository.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,6 +45,7 @@ public class RestaurantRestController {
         return restaurantRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @DeleteMapping(RESTAURANT_URL + "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
@@ -51,6 +53,7 @@ public class RestaurantRestController {
         checkSingleModification(restaurantRepository.delete(id), "Restaurant id=" + id + " not found");
     }
 
+    @CacheEvict(value = "menus", allEntries = true)
     @PutMapping(value = RESTAURANT_URL + "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {

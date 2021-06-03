@@ -22,6 +22,7 @@ public interface MenuRepository extends BaseRepository<Menu> {
     @Query("SELECT m FROM Menu m WHERE m.id=:id AND m.restaurant.id=:restId")
     Optional<Menu> getById(@Param("id") int id, @Param("restId") int restId);
 
+    @EntityGraph(attributePaths = {"dishes","restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Menu m WHERE m.date=:date AND m.restaurant.id=:restId")
     Optional<Menu> getByDate(@Param("date") LocalDate date, @Param("restId") int restId);
 
