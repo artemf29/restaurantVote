@@ -35,13 +35,17 @@ public class ExceptionInfoHandler {
 
     public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
     public static final String EXCEPTION_DUPLICATE_DISH_NAME = "Dish with this name already exists";
+    public static final String EXCEPTION_DUPLICATE_RESTAURANT_NAME = "Restaurant with this name already exists";
+    public static final String EXCEPTION_DUPLICATE_MENU = "Menu with this date already exists for this restaurant";
     public static final String EXCEPTION_DUPLICATE_VOTE = "Vote with this date already exists";
     public static final String EXCEPTION_UPDATE_VOTE = "it is forbidden to change vote after 11:00";
     public static final String EXCEPTION_GET_VOTE = "User did not vote today";
 
     private static final Map<String, String> CONSTRAINS_MAP = Map.of(
             "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL,
-            "rest_unique_dish_name_idx", EXCEPTION_DUPLICATE_DISH_NAME,
+            "menu_unique_dish_name_idx", EXCEPTION_DUPLICATE_DISH_NAME,
+            "rest_unique_menu_date_idx", EXCEPTION_DUPLICATE_MENU,
+            "restaurant_unique_name_idx", EXCEPTION_DUPLICATE_RESTAURANT_NAME,
             "vote_unique_date_user_idx", EXCEPTION_DUPLICATE_VOTE);
 
     @ExceptionHandler(UpdateVoteException.class)

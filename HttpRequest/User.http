@@ -19,8 +19,7 @@ Authorization: Basic admin@gmail.com admin
 
 ###
 # create user
-### curl -s -X POST "http://localhost:8080/rest/admin/users"
-### -H "Content-Type: application/json" -d "{\"name\":\"new User\",\"email\":\"test@icloud.com\",\"password\":\"test123\"}" --user admin@gmail.com:admin
+### curl -s -X POST "http://localhost:8080/rest/admin/users" -H "Content-Type: application/json" -d "{\"name\":\"new User\",\"email\":\"test@icloud.com\",\"password\":\"test123\"}" --user admin@gmail.com:admin
 POST http://localhost:8080/rest/admin/users
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
@@ -33,8 +32,7 @@ Content-Type: application/json
 
 ###
 # update user by id 100000
-### curl -s -X PUT "http://localhost:8080/rest/admin/users/100000"
-### -H "Content-Type: application/json" -d "{\"name\":\"update User\",\"email\":\"updated@icloud.com\",\"password\":\"updated\"}" --user admin@gmail.com:admin
+### curl -s -X PUT "http://localhost:8080/rest/admin/users/100000" -H "Content-Type: application/json" -d "{\"name\":\"update User\",\"email\":\"updated@icloud.com\",\"password\":\"updated\"}" --user admin@gmail.com:admin
 PUT http://localhost:8080/rest/admin/users/100000
 Authorization: Basic admin@gmail.com admin
 Content-Type: application/json
@@ -60,8 +58,7 @@ Authorization: Basic user@yandex.ru password
 
 ###
 # register user
-### curl -s -X POST "http://localhost:8080/rest/profile/register"
-### -H "Content-Type: application/json" -d "{\"name\":\"new User\",\"email\":\"new@gmail.com\",\"password\":\"new123\"}"
+### curl -s -X POST "http://localhost:8080/rest/profile/register" -H "Content-Type: application/json" -d "{\"name\":\"new User\",\"email\":\"new@gmail.com\",\"password\":\"new123\"}"
 POST http://localhost:8080/rest/profile/register
 Content-Type: application/json
 
@@ -73,8 +70,7 @@ Content-Type: application/json
 
 ###
 # update profile
-### curl -s -X PUT "http://localhost:8080/rest/profile"
-### -H "Content-Type: application/json" -d "{\"name\":\"update User\",\"email\":\"update@gmail.com\",\"password\":\"update123\"}" --user user@yandex.ru:password
+### curl -s -X PUT "http://localhost:8080/rest/profile" -H "Content-Type: application/json" -d "{\"name\":\"update User\",\"email\":\"update@gmail.com\",\"password\":\"update123\"}" --user user@yandex.ru:password
 PUT http://localhost:8080/rest/profile
 Authorization: Basic user@yandex.ru password
 Content-Type: application/json

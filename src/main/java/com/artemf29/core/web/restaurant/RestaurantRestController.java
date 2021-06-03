@@ -5,7 +5,6 @@ import com.artemf29.core.repository.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,20 +39,13 @@ public class RestaurantRestController {
         return ResponseEntity.of(restaurantRepository.findById(id));
     }
 
-    @GetMapping(RESTAURANT_URL + "/{id}/with-dish")
-    public ResponseEntity<Restaurant> getWithDish(@PathVariable int id) {
-        log.info("getWithDish {}", id);
-        return ResponseEntity.of(restaurantRepository.getWithDish(id));
-    }
-
-    @Cacheable("restaurants")
     @GetMapping(RESTAURANT_URL)
     public List<Restaurant> getAll() {
         log.info("getAll");
         return restaurantRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = "menus", allEntries = true)
     @DeleteMapping(RESTAURANT_URL + "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
@@ -61,7 +53,7 @@ public class RestaurantRestController {
         checkSingleModification(restaurantRepository.delete(id), "Restaurant id=" + id + " not found");
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
+    @CacheEvict(value = "menus", allEntries = true)
     @PutMapping(value = RESTAURANT_URL + "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
@@ -71,7 +63,6 @@ public class RestaurantRestController {
         restaurantRepository.save(restaurant);
     }
 
-    @CacheEvict(value = "restaurants", allEntries = true)
     @PostMapping(value = RESTAURANT_URL, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
@@ -81,12 +72,5 @@ public class RestaurantRestController {
                 .path(RESTAURANT_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @Cacheable("restaurants")
-    @GetMapping("/rest/getAllRestWithDish")
-    public List<Restaurant> getAllWithDish() {
-        log.info("getAll restaurants");
-        return restaurantRepository.getAllWithDish();
     }
 }

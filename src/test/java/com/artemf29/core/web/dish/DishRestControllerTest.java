@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
-
 import static com.artemf29.core.testdata.DishTestDataUtils.*;
+import static com.artemf29.core.testdata.MenuTestDataUtils.MENU_4_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_1_ID;
 import static com.artemf29.core.testdata.UserTestDataUtils.admin;
 import static com.artemf29.core.util.UrlUtil.DISH_URL;
@@ -36,7 +36,7 @@ class DishRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + DISH_1_ID, RESTAURANT_1_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + DISH_1_ID, RESTAURANT_1_ID, MENU_4_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -46,39 +46,29 @@ class DishRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getUnAuth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + DISH_1_ID, RESTAURANT_1_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + DISH_1_ID, RESTAURANT_1_ID, MENU_4_ID))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND, RESTAURANT_1_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND, RESTAURANT_1_ID, MENU_4_ID)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL, RESTAURANT_1_ID)
-                .with(userHttpBasic(admin)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_MATCHER.contentJson(dishKorean));
-    }
-
-    @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + DISH_1_ID, RESTAURANT_1_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + DISH_1_ID, RESTAURANT_1_ID, MENU_4_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
-        assertFalse(dishRepository.get(DISH_1_ID, RESTAURANT_1_ID).isPresent());
+        assertFalse(dishRepository.get(DISH_1_ID, MENU_4_ID).isPresent());
     }
 
     @Test
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND, RESTAURANT_1_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND, RESTAURANT_1_ID, MENU_4_ID)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
@@ -87,18 +77,18 @@ class DishRestControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         Dish updated = getUpdated();
-        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID, RESTAURANT_1_ID).contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID, RESTAURANT_1_ID, MENU_4_ID).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
 
-        DISH_MATCHER.assertMatch(dishRepository.get(DISH_1_ID, RESTAURANT_1_ID).get(), updated);
+        DISH_MATCHER.assertMatch(dishRepository.get(DISH_1_ID, MENU_4_ID).get(), updated);
     }
 
     @Test
     void createWithLocation() throws Exception {
         Dish newDish = getNew();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID)
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID, MENU_4_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newDish))
                 .with(userHttpBasic(admin)))
@@ -108,13 +98,13 @@ class DishRestControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
-        DISH_MATCHER.assertMatch(dishRepository.get(newId, RESTAURANT_1_ID).get(), newDish);
+        DISH_MATCHER.assertMatch(dishRepository.get(newId, MENU_4_ID).get(), newDish);
     }
 
     @Test
     void createInvalid() throws Exception {
         Dish invalid = new Dish(null, null, -10);
-        perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID)
+        perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID, MENU_4_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))
@@ -125,7 +115,7 @@ class DishRestControllerTest extends AbstractControllerTest {
     @Test
     void updateInvalid() throws Exception {
         Dish invalid = new Dish(DISH_1_ID, null, -10, "I");
-        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID, RESTAURANT_1_ID).contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID, RESTAURANT_1_ID, MENU_4_ID).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))
                 .andDo(print())
@@ -136,7 +126,7 @@ class DishRestControllerTest extends AbstractControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void createDuplicate() throws Exception {
         Dish invalid = new Dish(null, dish2.getName(), 100);
-        perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID)
+        perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_1_ID, MENU_4_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))
@@ -149,7 +139,7 @@ class DishRestControllerTest extends AbstractControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     void updateDuplicate() throws Exception {
         Dish invalid = new Dish(DISH_1_ID, dish2.getName(), 100);
-        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID, RESTAURANT_1_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + DISH_1_ID, RESTAURANT_1_ID, MENU_4_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))

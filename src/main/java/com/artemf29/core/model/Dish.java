@@ -17,12 +17,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"rest_id", "name"}, name = "rest_unique_dish_name_idx")})
-public class Dish extends AbstractBaseEntity {
-
-    @Column(name = "name", nullable = false)
-    @NotNull
-    private String name;
+@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"menu_id", "name"}, name = "menu_unique_dish_name_idx")})
+public class Dish extends AbstractNamedEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
@@ -35,45 +31,49 @@ public class Dish extends AbstractBaseEntity {
     private String description = "No description";
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rest_id", nullable = false)
+    @JoinColumn(name = "menu_id", nullable = false)
     @JsonBackReference
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Restaurant restaurant;
+    private Menu menu;
 
     public Dish() {
     }
 
     public Dish(Integer id, String name, int price, String description) {
-        super(id);
+        super(id, name);
         this.name = name;
         this.price = price;
         this.description = description;
     }
 
     public Dish(Integer id, String name, int price) {
-        super(id);
+        super(id, name);
         this.name = name;
         this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public int getPrice() {
+        return price;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     @Override

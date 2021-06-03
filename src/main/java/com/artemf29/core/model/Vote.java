@@ -14,12 +14,12 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "vote_date"}, name = "vote_unique_date_user_idx")})
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "vote_date"}, name = "vote_unique_date_user_idx")})
 public class Vote extends AbstractBaseEntity {
 
     @Column(name = "vote_date", nullable = false, columnDefinition = "default now()")
     @NotNull
-    private LocalDate voteDate;
+    private LocalDate voteDate = LocalDate.now();
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

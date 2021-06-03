@@ -3,11 +3,12 @@ package com.artemf29.core.util;
 import com.artemf29.core.model.Role;
 import com.artemf29.core.model.User;
 import com.artemf29.core.to.UserTo;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
-import static com.artemf29.core.config.WebSecurityConfig.PASSWORD_ENCODER;
-
 public class UserUtil {
+    public static final PasswordEncoder PASSWORD_ENCODER = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     public static User createNewFromTo(UserTo userTo) {
         return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.USER);

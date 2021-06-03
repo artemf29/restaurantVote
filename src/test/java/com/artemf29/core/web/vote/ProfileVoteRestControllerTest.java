@@ -3,6 +3,7 @@ package com.artemf29.core.web.vote;
 import com.artemf29.core.model.Vote;
 import com.artemf29.core.repository.VoteRepository;
 import com.artemf29.core.util.VoteUtil;
+import com.artemf29.core.util.json.JsonUtil;
 import com.artemf29.core.web.AbstractControllerTest;
 import com.artemf29.core.web.ExceptionInfoHandler;
 import org.junit.jupiter.api.Test;
@@ -10,11 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import static com.artemf29.core.TestUtil.readFromJson;
 import static com.artemf29.core.TestUtil.userHttpBasic;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_1_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_2_ID;
 import static com.artemf29.core.testdata.RestaurantTestDataUtils.RESTAURANT_3_ID;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant1;
+import static com.artemf29.core.testdata.RestaurantTestDataUtils.restaurant2;
+import static com.artemf29.core.testdata.UserTestDataUtils.ADMIN_ID;
 import static com.artemf29.core.testdata.UserTestDataUtils.USER_ID;
 import static com.artemf29.core.testdata.UserTestDataUtils.admin;
 import static com.artemf29.core.testdata.UserTestDataUtils.user;
@@ -40,7 +49,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_TO_MATCHER.contentJson(VoteUtil.createTo(vote2)));
+                .andExpect(VOTE_TO_MATCHER.contentJson(VoteUtil.createTo(vote1)));
     }
 
     @Test
@@ -61,17 +70,17 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
         Vote updated = getUpdated();
         if (now().isAfter(of(11, 0))) {
             perform(MockMvcRequestBuilders.put(REST_URL + VOTE_1_ID)
-                    .param("restId", Integer.toString(RESTAURANT_2_ID))
-                    .with(userHttpBasic(user)))
+                    .param("restId", Integer.toString(RESTAURANT_3_ID))
+                    .with(userHttpBasic(admin)))
                     .andExpect(status().isUnprocessableEntity())
                     .andExpect(content().string(containsString(ExceptionInfoHandler.EXCEPTION_UPDATE_VOTE)));
         } else {
             perform(MockMvcRequestBuilders.put(REST_URL + VOTE_1_ID)
-                    .param("restId", Integer.toString(RESTAURANT_2_ID))
-                    .with(userHttpBasic(user)))
+                    .param("restId", Integer.toString(RESTAURANT_3_ID))
+                    .with(userHttpBasic(admin)))
                     .andExpect(status().isOk());
 
-            VOTE_MATCHER.assertMatch(voteRepository.getById(VOTE_1_ID, USER_ID).get(), updated);
+            VOTE_MATCHER.assertMatch(voteRepository.getById(VOTE_1_ID, ADMIN_ID).get(), updated);
         }
     }
 
@@ -107,5 +116,16 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(user)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    void createDuplicate() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .param("restId", Integer.toString(RESTAURANT_1_ID))
+                .with(userHttpBasic(admin)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().string(containsString(ExceptionInfoHandler.EXCEPTION_DUPLICATE_VOTE)));
     }
 }
