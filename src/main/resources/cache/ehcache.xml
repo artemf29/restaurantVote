@@ -5,18 +5,11 @@
     <!--http://www.ehcache.org/documentation/3.4/xml.html-->
     <!--http://www.ehcache.org/documentation/3.1/107.html#supplement-jsr-107-configurations-->
 
-    <cache-template name="expiryCache">
-        <expiry>
-            <ttl unit="minutes">120</ttl>
-        </expiry>
-        <heap unit="entries">5000</heap>
-    </cache-template>
-
     <cache-template name="singleNonExpiryCache">
         <expiry>
             <none/>
         </expiry>
-        <heap>2</heap>
+        <heap>1</heap>
     </cache-template>
 
     <cache alias="restaurants" uses-template="singleNonExpiryCache"/>
