@@ -1,4 +1,4 @@
-package com.artemf29.core.web.restaurant;
+package com.artemf29.core.web;
 
 import com.artemf29.core.model.Restaurant;
 import com.artemf29.core.repository.RestaurantRepository;

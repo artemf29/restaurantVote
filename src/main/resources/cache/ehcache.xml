@@ -9,7 +9,7 @@
         <expiry>
             <ttl unit="minutes">120</ttl>
         </expiry>
-        <heap>2</heap>
+        <heap>1</heap>
     </cache-template>
 
     <cache alias="menus" uses-template="singleNonExpiryCache"/>

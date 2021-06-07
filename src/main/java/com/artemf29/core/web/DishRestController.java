@@ -1,4 +1,4 @@
-package com.artemf29.core.web.dish;
+package com.artemf29.core.web;
 
 import com.artemf29.core.model.Dish;
 import com.artemf29.core.repository.DishRepository;

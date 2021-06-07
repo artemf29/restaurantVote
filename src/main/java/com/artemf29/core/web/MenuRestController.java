@@ -1,4 +1,4 @@
-package com.artemf29.core.web.menu;
+package com.artemf29.core.web;
 
 import com.artemf29.core.model.Menu;
 import com.artemf29.core.repository.MenuRepository;

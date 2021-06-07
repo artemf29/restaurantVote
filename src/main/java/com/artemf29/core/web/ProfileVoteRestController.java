@@ -1,4 +1,4 @@
-package com.artemf29.core.web.vote;
+package com.artemf29.core.web;
 
 import com.artemf29.core.AuthorizedUser;
 import com.artemf29.core.model.Vote;
