@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -23,13 +24,13 @@ import static com.artemf29.core.util.UrlUtil.PROFILE_URL;
 public class ProfileRestController extends AbstractUserController {
 
     @GetMapping
-    public HttpEntity<User> get(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public HttpEntity<User> get(@AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) {
         return super.get(authUser.getId());
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@AuthenticationPrincipal AuthorizedUser authUser) {
+    public void delete(@AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) {
         super.delete(authUser.getId());
     }
 
@@ -46,7 +47,7 @@ public class ProfileRestController extends AbstractUserController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
-    public void update(@RequestBody UserTo userTo, @AuthenticationPrincipal AuthorizedUser authUser) throws BindException {
+    public void update(@RequestBody UserTo userTo, @AuthenticationPrincipal @ApiIgnore AuthorizedUser authUser) throws BindException {
         validateBeforeUpdate(userTo, authUser.getId());
         super.update(userTo, authUser.getId());
     }

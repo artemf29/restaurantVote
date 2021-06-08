@@ -91,7 +91,7 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
                 .param("restId", Integer.toString(RESTAURANT_3_ID))
                 .with(userHttpBasic(user)))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
 
         Vote created = readFromJson(action, Vote.class);
         int newId = created.id();

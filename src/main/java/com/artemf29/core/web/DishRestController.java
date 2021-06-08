@@ -38,6 +38,7 @@ public class DishRestController {
     @GetMapping("/{id}")
     public ResponseEntity<Dish> get(@PathVariable int restId, @PathVariable int menuId, @PathVariable int id) {
         log.info("get dish {} for menu {} for restaurant {}", id, menuId, restId);
+        checkNotFoundWithId(menuRepository.getById(menuId, restId),"Menu id = " + menuId + "for Restaurant id=" + restId);
         return ResponseEntity.of(dishRepository.get(id, menuId));
     }
 
@@ -46,6 +47,7 @@ public class DishRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int restId, @PathVariable int menuId, @PathVariable int id) {
         log.info("delete {} for menu {} for restaurant{}", id, menuId, restId);
+        checkNotFoundWithId(menuRepository.getById(menuId, restId),"Menu id = " + menuId + "for Restaurant id=" + restId);
         checkSingleModification(dishRepository.delete(id, menuId), "Dish id=" + id + ", Menu id=" + menuId + " missed");
     }
 

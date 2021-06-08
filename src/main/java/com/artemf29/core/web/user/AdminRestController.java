@@ -59,7 +59,7 @@ public class AdminRestController extends AbstractUserController {
     }
 
     @Override
-    @GetMapping("/by")
+    @GetMapping("/by-email")
     public ResponseEntity<User> getByEmail(@RequestParam String email) {
         log.info("getByEmail {}", email);
         return super.getByEmail(email);

@@ -52,7 +52,7 @@ class MenuRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getByDate() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL +  "by?date=" + menu2.getDate(), RESTAURANT_2_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + "by-date?date=" + menu2.getDate(), RESTAURANT_2_ID)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())

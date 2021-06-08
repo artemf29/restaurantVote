@@ -43,7 +43,7 @@ public class MenuRestController {
         return ResponseEntity.of(menuRepository.getById(id, restId));
     }
 
-    @GetMapping(MENU_URL + "/by")
+    @GetMapping(MENU_URL + "/by-date")
     public ResponseEntity<Menu> getByDate(@PathVariable int restId, @RequestParam LocalDate date) {
         log.info("get menu by date {} for restaurant {}", date, restId);
         return ResponseEntity.of(menuRepository.getRestaurantWithDish(restId, date));

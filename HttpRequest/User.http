@@ -14,7 +14,7 @@ Authorization: Basic admin@gmail.com admin
 ###
 # get user by email admin
 ### curl -s http://localhost:8080/rest/admin/users/by?email=admin@gmail.com --user admin@gmail.com:admin
-GET http://localhost:8080/rest/admin/users/by?email=admin@gmail.com
+GET http://localhost:8080/rest/admin/users/by-email?email=admin@gmail.com
 Authorization: Basic admin@gmail.com admin
 
 ###

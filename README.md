@@ -59,7 +59,7 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 - get user by email admin
 
-`curl -s http://localhost:8080/rest/admin/users/by?email=admin@gmail.com --user admin@gmail.com:admin`
+`curl -s http://localhost:8080/rest/admin/users/by-email?email=admin@gmail.com --user admin@gmail.com:admin`
 
 - create user
 
@@ -105,7 +105,7 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 - get menu by date 2021-03-08 by restaurant id 100002
   
-`curl -s http://localhost:8080/rest/admin/restaurants/100002/menu/by?date=2021-03-08 --user admin@gmail.com:admin`
+`curl -s http://localhost:8080/rest/admin/restaurants/100002/menu/by-date?date=2021-03-08 --user admin@gmail.com:admin`
 
 - create menu by restaurant id 100004
 
