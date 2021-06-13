@@ -42,10 +42,6 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 `curl -s http://localhost:8080/rest/restaurants/100002/menu/100008/with-dishes`
 
-- get all menus with restaurants with dishes
-
-`curl -s http://localhost:8080/rest/restaurants/menu/with-dishes --user user@yandex.ru:password`
-
 ### `Admin`
 
 ### AdminRestController     `/rest/admin/users`
@@ -174,6 +170,5 @@ The entire REST interface is covered by JUnit tests using Spring MVC Test and Sp
 
 ***
 ### Caching(EHCACHE)
-App caches 2 methods from the Menu for two hours (earlier, if changes are made):
-1. getRestaurantWithDish(restId, id) - get menu by id with restaurant by restId with all its dishes
-2. getAllRestaurantWithDish() - get all menus with all restaurants and all their dishes
+App caches method from the Menu for two hours (earlier, if changes are made):
+- getRestaurantWithDish(restId, id) - get menu by id with restaurant by restId with all its dishes

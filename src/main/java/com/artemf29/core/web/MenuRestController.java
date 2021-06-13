@@ -16,7 +16,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.List;
 
 import static com.artemf29.core.util.UrlUtil.MENU_URL;
 import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
@@ -87,12 +86,5 @@ public class MenuRestController {
     public ResponseEntity<Menu> getRestaurantWithDish(@PathVariable int restId, @PathVariable int id) {
         log.info("getWithDish {} for restaurants {}", id, restId);
         return ResponseEntity.of(menuRepository.getRestaurantWithDish(restId, LocalDate.now()));
-    }
-
-    @Cacheable("menus")
-    @GetMapping("/rest/restaurants/menu/with-dishes")
-    public List<Menu> getAllRestaurantWithDish() {
-        log.info("getAll menus with restaurants with dishes");
-        return menuRepository.getAllRestaurantWithDish(LocalDate.now());
     }
 }

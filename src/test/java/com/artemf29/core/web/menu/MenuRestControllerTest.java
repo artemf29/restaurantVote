@@ -130,16 +130,6 @@ class MenuRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void getAllRestaurantWithDish() throws Exception {
-        perform(MockMvcRequestBuilders.get("/rest/restaurants/menu/with-dishes")
-                .with(userHttpBasic(user)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MENU_WITH_RESTAURANT_AND_DISHES_MATCHER.contentJson(menuRepository.getAllRestaurantWithDish(LocalDate.now())));
-    }
-
-    @Test
     void createInvalid() throws Exception {
         Menu invalid = new Menu(null, null);
         perform(MockMvcRequestBuilders.post(REST_URL, RESTAURANT_2_ID)

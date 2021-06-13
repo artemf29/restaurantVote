@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static com.artemf29.core.util.UrlUtil.PROFILE_VOTE_URL;
+import static com.artemf29.core.util.ValidationUtil.assureIdConsistent;
 import static com.artemf29.core.util.ValidationUtil.checkNotFoundWithId;
 import static com.artemf29.core.util.VoteUtil.createTo;
 import static com.artemf29.core.util.VoteUtil.reVotingPermission;
@@ -57,6 +58,7 @@ public class ProfileVoteRestController {
         int userId = authUser.getId();
         log.info("update vote for user {} by id restaurant {}", userId, restId);
         Vote vote = new Vote(id, LocalDate.now());
+        assureIdConsistent(vote, id);
         checkNotFoundWithId(voteRepository.getById(id, userId), "Vote id=" + id + " doesn't belong to user id=" + userId);
         checkNotFoundWithId(restaurantRepository.findById(restId), "Restaurant id=" + restId);
         vote.setUser(userRepository.getOne(userId));
