@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-contributor%20covenant-green.svg?style=flat-square)](https://github.com/artfil/restaurantVote/blob/master/CODE_OF_CONDUCT.md)
 ***
-# Restaurant selection voting system
+# Restaurant voting system
 
 Enterprise Java project with registration/authorization and access rights based on roles (USER, ADMINISTRATOR).
 The administrator can create / view / edit / delete - dishes / menus / restaurants / users.
